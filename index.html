@@ -166,11 +166,11 @@
             ───────────────────────────────────────────────────────── */
             {
                 id: 'setup',
-                title: 'Przygotowanie systemu',
+                title: 'Przygotowanie Systemu',
                 icon: '🐧',
                 links: [
                     {name: 'Ubuntu 22.04', url: 'https://releases.ubuntu.com/jammy/'},
-                    {name: 'NVIDIA drivers', url: 'https://www.nvidia.com/en-us/drivers/'},
+                    {name: 'NVIDIA Drivers', url: 'https://www.nvidia.com/en-us/drivers/'},
                     {name: 'CycloneDDS', url: 'https://github.com/eclipse-cyclonedds/cyclonedds'}
                 ],
                 description: 'Kompletna konfiguracja Ubuntu 22.04 dla Unitree G1 EDU – od instalacji jądra niskolatencyjnego, przez sterowniki NVIDIA, po strojenie warstwy sieciowej DDS.',
@@ -178,7 +178,7 @@
                     <div class="space-y-6 step-content">
 
                         <!-- CZĘŚĆ 1: Ubuntu i narzędzia -->
-                        <div class="section-label">Część 1 — Ubuntu 22.04 &amp; Narzędzia bazowe</div>
+                        <div class="section-label">🐧 Część 1 — Ubuntu 22.04 &amp; Narzędzia bazowe</div>
 
                         <p class="text-stone-600">Unitree G1 komunikuje się przez protokół UDP. Aby zapewnić stabilność, system musi być zoptymalizowany pod kątem opóźnień sieciowych oraz obsługi kart NVIDIA wymaganych przez Isaac Sim.</p>
 
@@ -213,7 +213,7 @@ sudo apt install nvidia-driver-535 -y
                         <hr class="section-divider">
 
                         <!-- CZĘŚĆ 2: Konfiguracja OS -->
-                        <div class="section-label">Część 2 — Konfiguracja OS pod niskie opóźnienia</div>
+                        <div class="section-label">⚙️ Część 2 — Konfiguracja OS pod niskie opóźnienia</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">3. Jądro lowlatency</h3>
@@ -233,7 +233,7 @@ sudo apt install linux-image-lowlatency linux-headers-lowlatency -y
                         <hr class="section-divider">
 
                         <!-- CZĘŚĆ 3: Sieć i CycloneDDS -->
-                        <div class="section-label">Część 3 — Sieć, CycloneDDS i zależności SDK</div>
+                        <div class="section-label">📶 Część 3 — Sieć, CycloneDDS i zależności SDK</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">4. Konfiguracja interfejsu sieciowego</h3>
@@ -303,7 +303,7 @@ sudo make install</code></pre>
                     <div class="space-y-6 step-content">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">Architektura — Jak działa ROS 2 z G1?</div>
+                        <div class="section-label">🏛️ Architektura — Jak działa ROS 2 z G1?</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             ROS 2 (Robot Operating System 2) to nie system operacyjny, lecz <strong>middleware</strong> – warstwa komunikacyjna łącząca niezależne procesy (węzły) przez ustandaryzowane interfejsy. Unitree G1 EDU integruje się z ROS 2 przez mostek DDS, który przekształca wewnętrzne pakiety UDP robota na standardowe wiadomości ROS 2.
@@ -346,7 +346,7 @@ sudo make install</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">Część 1 — Instalacja i workspace</div>
+                        <div class="section-label">📦 Część 1 — Instalacja i Workspace</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">1. Instalacja ROS 2 Humble</h3>
@@ -401,7 +401,7 @@ source ~/.bashrc</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">Część 2 — tematy (topics) i komendy G1</div>
+                        <div class="section-label">📡 Część 2 — Tematy i Komendy G1</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">3. Mapa kluczowych tematów ROS 2 dla G1</h3>
@@ -492,7 +492,7 @@ ros2 bag play ~/session_2024_g1</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">Część 3 — Własne węzły ROS 2 (Python)</div>
+                        <div class="section-label">🐍 Część 3 — Własne Węzły ROS 2 (Python)</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">5. Subskrybent stanu robota (Subscriber)</h3>
@@ -636,7 +636,7 @@ if __name__ == '__main__':
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">Część 4 — Launch Files i Parametry</div>
+                        <div class="section-label">🚀 Część 4 — Launch Files i Parametry</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">8. Plik Launch – uruchamianie wielu węzłów jednocześnie</h3>
@@ -692,7 +692,7 @@ ros2 launch my_g1_pkg g1_full.launch.py interface:=enp3s0</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">Część 5 — tf2: System Transformacji</div>
+                        <div class="section-label">🗺️ Część 5 — tf2: System Transformacji</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">9. Drzewo transformacji G1 (tf2)</h3>
@@ -737,7 +737,7 @@ class TfReader(Node):
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">Część 6 — Unitree SDK2 (Low-Level Control)</div>
+                        <div class="section-label">🏗️ Część 6 — Unitree SDK2 (Low-Level Control)</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             SDK2 umożliwia <strong>bezpośredni</strong> dostęp do silników G1 z pominięciem ROS 2 – niezbędny przy implementacji własnych kontrolerów balansu lub Reinforcement Learning. Komunikuje się przez DDS bezpośrednio z kontrolerem ruchu robota.
@@ -892,97 +892,666 @@ while True:
             ───────────────────────────────────────────────────────── */
             {
                 id: 'ai',
-                title: 'Vision AI & perception',
+                title: 'Vision AI & Perception',
                 icon: '👁️',
-                links: [{name: 'MediaPipe', url: 'https://ai.google.dev/edge/mediapipe/solutions/guide?hl=pl'}],
-                description: 'Integracja kamer G1 z modelami MediaPipe i DeepFace dla rozpoznawania osób i gestów.',
+                links: [
+                    {name: 'MediaPipe', url: 'https://ai.google.dev/edge/mediapipe/solutions/guide?hl=pl'},
+                    {name: 'OpenVLA', url: 'https://openvla.github.io/'},
+                    {name: 'UniForm WMA', url: 'https://github.com/unitreerobotics/unifolm-world-model-action'}
+                ],
+                description: 'Percepcja wizualna, rozpoznawanie gestów i twarzy, a także uczenie nawigacji w przestrzeni z użyciem modeli VLA (Vision-Language-Action) i WMA (World Model Action).',
                 details: `
                     <div class="space-y-6 step-content">
-                        <section>
-                            <h3 class="text-xl font-bold mb-3">Przygotowanie środowiska wizyjnego</h3>
-                            <p class="text-stone-600">Implementacja zaawansowanej inteligencji: rozpoznawanie twarzy, analiza gestów i uczenie przez wzmacnianie.</p>
-                        </section>
+
+                        <!-- ─── KLASYCZNA PERCEPCJA ─────────────────────── -->
+                        <div class="section-label">👁️ Część 1 — Klasyczna percepcja: MediaPipe & DeepFace</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Klasyczny pipeline percepcji łączy lekkie modele czasu rzeczywistego do śledzenia ciała i twarzy. Działa na CPU, nie wymaga trenowania i dostarcza robotowi informacji o ludziach w otoczeniu w ciągu milisekund.
+                        </p>
 
                         <div class="pro-tip p-5 rounded-xl">
-                            <h4 class="font-bold text-blue-800">Redukcja Latencji</h4>
-                            <p class="text-sm text-blue-700">Użyj bufora kołowego (circular buffer) dla klatek wideo. Przetwarzaj tylko najnowszą klatkę, odrzucając te, które „utknęły" w kolejce procesora obrazu.</p>
+                            <h4 class="font-bold text-blue-800">Redukcja latencji dla strumienia wideo</h4>
+                            <p class="text-sm text-blue-700">Użyj bufora kołowego (circular buffer) dla klatek wideo. Przetwarzaj tylko najnowszą klatkę, odrzucając te, które „utknęły" w kolejce procesora obrazu. Dla G1 zalecany FPS analizy to 15–30 Hz.</p>
                         </div>
 
-                        <div class="code-block">
-                            <pre><code># Aktywuj swoje środowisko
-source ~/g1_env/bin/activate
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Instalacja środowiska wizyjnego</h3>
+                            <div class="code-block">
+                                <pre><code># Stwórz izolowane środowisko (unika konfliktów z ROS2)
+python3 -m venv ~/g1_env && source ~/g1_env/bin/activate
 
 # Instalacja MediaPipe i DeepFace
 pip install tensorflow deepface mediapipe opencv-python tf-keras
 
-# Opcjonalnie dla akceleracji GPU
+# Opcjonalnie – akceleracja GPU (CUDA 11.8)
 pip install "tensorflow[and-cuda]"
 
 # Test kamery
-python3 -c "import cv2; cap=cv2.VideoCapture(0); print(cap.isOpened())"</code></pre>
-                        </div>
+python3 -c "import cv2; cap=cv2.VideoCapture(0); print('Kamera:', cap.isOpened())"</code></pre>
+                            </div>
+                        </section>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 bg-white border rounded-xl shadow-sm">
+                            <div class="p-5 bg-white border rounded-xl shadow-sm">
                                 <h4 class="font-bold text-amber-600 uppercase text-xs mb-2">DeepFace</h4>
-                                <p class="text-xs text-stone-500">Analiza emocji, wieku i identyfikacja osób w czasie rzeczywistym z kamer robota.</p>
+                                <p class="text-xs text-stone-500 leading-relaxed">Analiza emocji, wieku i identyfikacja tożsamości w czasie rzeczywistym z kamer robota. Backend: VGG-Face, Facenet, ArcFace. Obsługuje 7 emocji i weryfikację 1:N.</p>
                             </div>
-                            <div class="p-4 bg-white border rounded-xl shadow-sm">
-                                <h4 class="font-bold text-amber-600 uppercase text-xs mb-2">MediaPipe</h4>
-                                <p class="text-xs text-stone-500">Śledzenie dłoni i ciała (pose estimation) do sterowania gestami.</p>
+                            <div class="p-5 bg-white border rounded-xl shadow-sm">
+                                <h4 class="font-bold text-amber-600 uppercase text-xs mb-2">MediaPipe Holistic</h4>
+                                <p class="text-xs text-stone-500 leading-relaxed">33 punkty postawy ciała + 21 punktów każdej dłoni + 468 punktów twarzy w jednym przebiegu. Działa w 30ms na CPU. Podstawa dla teleoperacji gestami.</p>
                             </div>
-                        </div>
-
-                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-2xl">
-                            <h4 class="font-bold text-blue-900 mb-2">Zastosowania w G1 EDU</h4>
-                            <ul class="text-sm text-blue-800 space-y-2 list-disc ml-4">
-                                <li><strong>Teleoperacja:</strong> Mapowanie kątów stawów człowieka z MediaPipe na serwa G1.</li>
-                                <li><strong>Interakcja społeczna:</strong> DeepFace rozpoznaje tożsamość i nastrój użytkownika.</li>
-                                <li><strong>Śledzenie dłoni:</strong> Sterowanie chwytakami G1 za pomocą gestów (hand-tracking control).</li>
-                            </ul>
                         </div>
 
                         <section>
-                            <h3 class="text-xl font-bold mb-3">Śledzenie gestów (MediaPipe)</h3>
-                            <p class="text-stone-600 text-sm mb-4">Wykorzystując MediaPipe, otrzymujemy 33 punkty charakterystyczne ciała. Poniższy skrypt wyodrębnia współrzędne nadgarstka do wysłania jako cel dla ramienia G1.</p>
+                            <h3 class="text-xl font-bold mb-3">Śledzenie gestów w czasie rzeczywistym (MediaPipe)</h3>
+                            <p class="text-stone-600 text-sm mb-3">Poniższy skrypt wyodrębnia kąt łokcia prawego ramienia człowieka i wysyła go jako cel dla odpowiedniego stawu G1 – podstawa teleoperacji.</p>
                             <div class="code-block">
-                                <pre><code>import cv2
+                                <pre><code>import cv2, math, rclpy
 import mediapipe as mp
+from std_msgs.msg import Float64
+
+rclpy.init()
+node = rclpy.create_node('gesture_teleop')
+pub  = node.create_publisher(Float64, '/g1/right_elbow_target', 10)
 
 mp_pose = mp.solutions.pose
-pose = mp_pose.Pose()
+pose    = mp_pose.Pose(min_detection_confidence=0.6)
+
+def angle_between(a, b, c):
+    """Kąt w punkcie b wyznaczony przez punkty a, b, c [stopnie]"""
+    ab = [a.x - b.x, a.y - b.y]
+    cb = [c.x - b.x, c.y - b.y]
+    cos_angle = (ab[0]*cb[0] + ab[1]*cb[1]) / (
+        math.hypot(*ab) * math.hypot(*cb) + 1e-9)
+    return math.degrees(math.acos(max(-1.0, min(1.0, cos_angle))))
 
 cap = cv2.VideoCapture(0)
 while cap.isOpened():
-    success, image = cap.read()
-    results = pose.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-
+    ret, frame = cap.read()
+    if not ret: break
+    results = pose.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
     if results.pose_landmarks:
-        wrist_y = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_WRIST].y
-        print(f"Pozycja nadgarstka: {wrist_y}")
-        # TUTAJ: Wyślij wrist_y jako cel dla ramienia robota G1
+        lm = results.pose_landmarks.landmark
+        # Indeksy MediaPipe: ramię=12, łokieć=14, nadgarstek=16 (prawa strona)
+        shoulder = lm[mp_pose.PoseLandmark.RIGHT_SHOULDER]
+        elbow    = lm[mp_pose.PoseLandmark.RIGHT_ELBOW]
+        wrist    = lm[mp_pose.PoseLandmark.RIGHT_WRIST]
 
-    cv2.imshow('G1 Vision Debug', image)
-    if cv2.waitKey(5) & 0xFF == 27: break</code></pre>
+        deg = angle_between(shoulder, elbow, wrist)
+        rad = math.radians(deg)
+
+        msg = Float64()
+        msg.data = rad
+        pub.publish(msg)
+
+        cv2.putText(frame, f'Łokieć: {deg:.1f}°', (20, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 120), 2)
+
+    cv2.imshow('G1 Gesture Teleop', frame)
+    if cv2.waitKey(1) & 0xFF == 27: break
+
+cap.release()
+rclpy.shutdown()</code></pre>
                             </div>
                         </section>
 
                         <section>
-                            <h3 class="text-xl font-bold mb-3">Rozpoznawanie twarzy (DeepFace)</h3>
+                            <h3 class="text-xl font-bold mb-3">Rozpoznawanie twarzy i nastroju (DeepFace)</h3>
                             <div class="code-block">
                                 <pre><code>from deepface import DeepFace
+import cv2
 
-def analyze_user(frame):
-    objs = DeepFace.analyze(frame, actions=['emotion', 'age'], enforce_detection=False)
-    for obj in objs:
-        print(f"Użytkownik ma ok. {obj['age']} lat i jest {obj['dominant_emotion']}")
-        # G1 może np. pomachać, gdy wykryje uśmiech (happy)</code></pre>
+# Rejestracja twarzy użytkownika do bazy (jednorazowo)
+# Zapisz zdjęcie: ~/faces/jan_kowalski.jpg
+
+def analyze_frame(frame):
+    try:
+        # Analiza emocji + weryfikacja tożsamości
+        analysis = DeepFace.analyze(
+            frame, actions=['emotion', 'age'], enforce_detection=False)
+        identity = DeepFace.find(
+            frame, db_path='~/faces', enforce_detection=False)
+
+        emotion = analysis[0]['dominant_emotion']
+        age     = analysis[0]['age']
+        name    = identity[0].iloc[0]['identity'] if len(identity[0]) > 0 \
+                  else 'nieznany'
+
+        print(f"Osoba: {name} | Wiek: ~{age} | Nastrój: {emotion}")
+        # G1 dobiera styl powitania do nastroju rozmówcy
+        return {'name': name, 'age': age, 'emotion': emotion}
+
+    except Exception as e:
+        return {'name': 'nieznany', 'emotion': 'unknown'}
+
+cap = cv2.VideoCapture(0)
+ret, frame = cap.read()
+result = analyze_frame(frame)
+print(result)</code></pre>
                             </div>
                         </section>
 
                         <div class="bg-stone-100 p-4 rounded-xl text-sm">
-                            <strong>Tip:</strong> Zawsze używaj <code>virtualenv</code> (np. Conda), aby uniknąć konfliktów między TensorFlow a bibliotekami systemowymi ROS2.
+                            <strong>Tip:</strong> Używaj <code>virtualenv</code> (np. Conda), aby unikać konfliktów między TensorFlow a bibliotekami systemowymi ROS2. Dla DeepFace z akceleracją GPU ustaw <code>CUDA_VISIBLE_DEVICES=0</code> przed startem węzła.
                         </div>
+
+                        <!-- ─── VLA ─────────────────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">🧠 Część 2 — Vision-Language-Action: OpenVLA</div>
+
+                        <!-- Kontekst konceptualny -->
+                        <div class="bg-stone-950 rounded-2xl p-7 text-white">
+                            <p class="text-amber-400 text-[10px] font-black uppercase tracking-widest mb-3">Czym jest VLA?</p>
+                            <h3 class="text-xl font-black mb-3 leading-snug">Robot rozumie obraz i tekst,<br>i sam generuje akcje motoryczne.</h3>
+                            <p class="text-stone-300 text-sm leading-relaxed">
+                                Modele <strong>Vision-Language-Action (VLA)</strong> to następny krok po Imitation Learning. Zamiast mapować surowe piksele na ruchy (jak LeRobot), model VLA rozumie <em>co widzi</em> (Vision Encoder), <em>co mu powiedziano</em> (Language Instruction) i generuje ciąg akcji robotycznych. Można powiedzieć robotowi: <em>„Połóż czerwony kubek na białej serwetce"</em> — bez programowania trajektorii.
+                            </p>
+                            <div class="grid grid-cols-3 gap-3 mt-5">
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-xl mb-1">📷</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">Vision Encoder</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">Przetwarza obraz z kamery na tokeny wizualne</p>
+                                </div>
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-xl mb-1">💬</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">Language Encoder</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">Tokenizuje instrukcję tekstową operatora</p>
+                                </div>
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-[21px] mb-1">🦾</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">Action Head</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">Generuje kąty stawów / Δpose ramienia</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Architektura OpenVLA</h3>
+                            <p class="text-stone-600 leading-relaxed mb-4">
+                                <strong>OpenVLA</strong> (Stanford + Berkeley, 2024) to pierwszy w pełni open-source model VLA o 7 miliardach parametrów, oparty na <strong>Llama 2</strong> jako szkielecie językowym i <strong>SigLIP + DinoV2</strong> jako enkoderem wizualnym. Model jest wytrenowany na zbiorze <em>Open X-Embodiment</em> zawierającym dane z 22 różnych platform robotycznych — w tym robotów manipulacyjnych zbliżonych do konfiguracji ramion G1.
+                            </p>
+
+                            <div class="overflow-x-auto rounded-xl border border-stone-100 mb-4">
+                                <table class="w-full text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-stone-900 text-amber-400">
+                                            <th class="text-left px-4 py-3 font-black">Komponent</th>
+                                            <th class="text-left px-4 py-3 font-black">Model</th>
+                                            <th class="text-left px-4 py-3 font-black">Rola</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-stone-100 bg-white">
+                                        <tr class="hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-bold">Backbone językowy</td>
+                                            <td class="px-4 py-3 font-mono text-blue-600">Llama 2 (7B)</td>
+                                            <td class="px-4 py-3 text-stone-600">Przetwarza sekwencję tokenów wizualnych + tekstowych, generuje tokeny akcji</td>
+                                        </tr>
+                                        <tr class="hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-bold">Enkoder wizualny</td>
+                                            <td class="px-4 py-3 font-mono text-blue-600">SigLIP + DINOv2</td>
+                                            <td class="px-4 py-3 text-stone-600">Ekstrakcja cech z obrazu kamery (224×224), fuzja lokalna i globalna</td>
+                                        </tr>
+                                        <tr class="hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-bold">Głowica akcji</td>
+                                            <td class="px-4 py-3 font-mono text-blue-600">Discrete tokenizer</td>
+                                            <td class="px-4 py-3 text-stone-600">7-wymiarowy wektor akcji [Δx, Δy, Δz, Δroll, Δpitch, Δyaw, gripper]</td>
+                                        </tr>
+                                        <tr class="hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-bold">Dataset treningowy</td>
+                                            <td class="px-4 py-3 font-mono text-blue-600">Open X-Embodiment</td>
+                                            <td class="px-4 py-3 text-stone-600">970k epizodów, 22 platformy robotyczne, 527 zadań</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Instalacja i uruchomienie OpenVLA</h3>
+                            <div class="code-block">
+                                <pre><code># Klonowanie repozytorium OpenVLA
+git clone https://github.com/openvla/openvla.git
+cd openvla
+
+# Instalacja zależności (wymaga CUDA 11.8+, Python 3.10+)
+pip install -e ".[train]"
+pip install flash-attn --no-build-isolation  # ~3x szybszy forward pass
+
+# Pobranie wag z Hugging Face (7B – ~14 GB)
+# Automatyczne przy pierwszym użyciu lub ręcznie:
+huggingface-cli download openvla/openvla-7b \
+    --local-dir ./checkpoints/openvla-7b</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Inferencja: obraz z kamery G1 + instrukcja tekstowa → akcja</h3>
+                            <div class="code-block">
+                                <pre><code>#!/usr/bin/env python3
+# Węzeł ROS 2: OpenVLA generuje komendy dla ramienia G1
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from cv_bridge import CvBridge
+from PIL import Image as PILImage
+from transformers import AutoModelForVision2Seq, AutoProcessor
+import torch, numpy as np
+
+INSTRUCTION = "pick up the red box and place it in the container"
+DEVICE = "cuda:0"
+
+class OpenVLAController(Node):
+    def __init__(self):
+        super().__init__('openvla_controller')
+
+        # Wczytaj model (pierwsze uruchomienie – pobiera wagi)
+        self.get_logger().info('Ładowanie OpenVLA 7B...')
+        self.processor = AutoProcessor.from_pretrained(
+            "openvla/openvla-7b", trust_remote_code=True)
+        self.model = AutoModelForVision2Seq.from_pretrained(
+            "openvla/openvla-7b",
+            attn_implementation="flash_attention_2",
+            torch_dtype=torch.bfloat16,
+            low_cpu_mem_usage=True,
+            trust_remote_code=True
+        ).to(DEVICE)
+        self.get_logger().info('✅ OpenVLA gotowy!')
+
+        self.bridge = CvBridge()
+
+        # Subskrybuj obraz z kamery głowowej G1
+        self.create_subscription(
+            Image, '/camera/color/image_raw', self.on_image, 5)
+
+        # Publikuj cel dla kontrolera ramienia (MoveIt / SDK2)
+        self.action_pub = self.create_publisher(
+            JointTrajectory, '/right_arm/joint_trajectory', 10)
+
+        # Metryki statystyk
+        self.action_stats = {
+            "mean": np.zeros(7),
+            "std":  np.ones(7)
+        }
+
+    def on_image(self, msg):
+        # Konwersja ROS Image → PIL Image
+        cv_img  = self.bridge.imgmsg_to_cv2(msg, desired_encoding='rgb8')
+        pil_img = PILImage.fromarray(cv_img)
+
+        # Przygotuj prompt w formacie OpenVLA
+        prompt = f"In: What action should the robot take to {INSTRUCTION}?\nOut:"
+
+        inputs = self.processor(prompt, pil_img).to(DEVICE, dtype=torch.bfloat16)
+
+        # Inferencja – generuj 7-wymiarową akcję
+        with torch.no_grad():
+            action_tokens = self.model.predict_action(
+                **inputs,
+                unnorm_key="bridge_orig",  # klucz normalizacji datasetu
+                do_sample=False
+            )
+
+        action = action_tokens.cpu().numpy()  # [Δx, Δy, Δz, Δr, Δp, Δy, gripper]
+
+        self.get_logger().info(
+            f'Akcja VLA → Δpos: {action[:3].round(4)} | '
+            f'Δorient: {action[3:6].round(4)} | '
+            f'gripper: {"zamknij" if action[6] < 0 else "otwórz"}'
+        )
+
+        # Wyślij jako komendę trajektorii (uproszczone mapowanie)
+        self._publish_arm_command(action)
+
+    def _publish_arm_command(self, action):
+        traj = JointTrajectory()
+        traj.joint_names = [
+            'right_shoulder_pitch', 'right_shoulder_roll',
+            'right_shoulder_yaw',   'right_elbow',
+            'right_wrist_roll',     'right_wrist_pitch',
+            'right_wrist_yaw'
+        ]
+        pt = JointTrajectoryPoint()
+        # action[:6] to delta-pozycje – dodaj do aktualnych kątów
+        pt.positions = action[:6].tolist()
+        pt.time_from_start.sec = 0
+        pt.time_from_start.nanosec = 500_000_000  # 0.5s
+        traj.points = [pt]
+        self.action_pub.publish(traj)
+
+def main():
+    rclpy.init()
+    rclpy.spin(OpenVLAController())
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Fine-tuning OpenVLA na własnych danych G1</h3>
+                            <p class="text-stone-600 mb-3 text-sm">
+                                Generalistyczny OpenVLA może nie rozumieć specyfiki kinematyki G1. Fine-tuning na kilkuset własnych epizodach teleoperacji (nagranych przez LeRobot) drastycznie poprawia precyzję.
+                            </p>
+                            <div class="code-block">
+                                <pre><code># Fine-tuning z LoRA (efektywny – trenuje tylko ~1% parametrów)
+# Wymaga RLDS-sformatowanych danych (standard Open X-Embodiment)
+torchrun --standalone --nnodes=1 --nproc-per-node=2 \
+    vla-scripts/finetune.py \
+    --vla_path "openvla/openvla-7b" \
+    --data_root_dir ~/datasets/g1_episodes \
+    --dataset_name "g1_pick_place" \
+    --run_root_dir ./checkpoints \
+    --adapter_tmp_dir ./adapters \
+    --lora_rank 32 \
+    --batch_size 16 \
+    --grad_accumulation_steps 2 \
+    --learning_rate 5e-4 \
+    --image_aug true \
+    --wandb_project "g1-vla-finetune" \
+    --wandb_entity "$USER"</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="critical-warn p-5 rounded-xl">
+                            <h4 class="font-bold text-red-800">Wymagania sprzętowe OpenVLA</h4>
+                            <p class="text-sm text-red-700">
+                                Inferencja modelu 7B wymaga <strong>min. 16 GB VRAM</strong> (RTX 4080 / A4000). Z <code>bfloat16</code> i Flash Attention 2 czas generowania jednej akcji wynosi ~80ms na RTX 4090. Do fine-tuningu z LoRA potrzeba 2× GPU (24 GB każda) lub pojedynczej A100 (40 GB). Rozważ deployment na dedykowanym serwerze inference, a nie na komputerze pokładowym G1.
+                            </p>
+                        </div>
+
+                        <!-- ─── WMA ─────────────────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">🌍 Część 3 — World Model Action: UniForm WMA (Unitree)</div>
+
+                        <!-- Kontekst konceptualny -->
+                        <div class="bg-stone-950 rounded-2xl p-7 text-white">
+                            <p class="text-amber-400 text-[10px] font-black uppercase tracking-widest mb-3">Czym jest World Model Action?</p>
+                            <h3 class="text-xl font-black mb-3 leading-snug">Robot buduje wewnętrzny model świata<br>i symuluje przyszłość przed działaniem.</h3>
+                            <p class="text-stone-300 text-sm leading-relaxed mb-4">
+                                <strong>VLA</strong> (jak OpenVLA) mapuje obraz + instrukcję bezpośrednio na akcję — to podejście reaktywne. <strong>WMA (World Model Action)</strong> idzie krok dalej: model najpierw buduje <em>latentną reprezentację stanu świata</em>, a następnie <em>przewiduje przyszłe stany</em> dla różnych sekwencji akcji, wybierając tę, która prowadzi do celu. Daje to robotowi zdolność do planowania na kilka kroków naprzód bez fizycznych prób i błędów.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mt-2">
+                                <div class="p-4 bg-stone-800 rounded-xl">
+                                    <p class="text-[10px] font-black uppercase text-amber-400 mb-2">Podejście VLA (reaktywne)</p>
+                                    <p class="text-xs text-stone-300 font-mono">obraz + tekst → akcja</p>
+                                    <p class="text-[10px] text-stone-500 mt-1">Decyzja na podstawie bieżącej klatki. Brak planowania w przyszłość.</p>
+                                </div>
+                                <div class="p-4 bg-stone-700 rounded-xl border border-amber-500/30">
+                                    <p class="text-[10px] font-black uppercase text-amber-400 mb-2">Podejście WMA (modelowanie świata)</p>
+                                    <p class="text-xs text-stone-300 font-mono">obraz → model świata → plan → akcja</p>
+                                    <p class="text-[10px] text-stone-500 mt-1">Model przewiduje skutki akcji, wybiera najlepszą sekwencję.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">UniForm — architektura Unitree WMA</h3>
+                            <p class="text-stone-600 leading-relaxed mb-4">
+                                <strong>UniForm</strong> (Unitree Robotics, 2024) to framework World Model Action zaprojektowany specjalnie dla robotów humanoidalnych, w tym G1. Łączy trzy komponenty: <strong>World Model</strong> (predykcja kolejnych ramek wideo w przestrzeni latentnej), <strong>Action Decoder</strong> (mapowanie celu na sekwencję ruchów całego ciała) oraz <strong>Planner</strong> oparty na drzewach MCTS lub Model Predictive Control (MPC).
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                                <div class="p-5 bg-stone-50 rounded-xl border border-stone-100">
+                                    <div class="text-2xl mb-2">🗺️</div>
+                                    <span class="text-xs font-black uppercase text-stone-700 block mb-1">World Model</span>
+                                    <p class="text-xs text-stone-500 leading-relaxed">Enkoder VAE tworzy latentny stan świata <em>z</em>, przewiduje <em>z</em>ₜ₊ₙ dla zadanej akcji. Trenowany na milionach klatek wideo z robotami.</p>
+                                </div>
+                                <div class="p-5 bg-stone-50 rounded-xl border border-stone-100">
+                                    <div class="text-2xl mb-2">📐</div>
+                                    <span class="text-xs font-black uppercase text-stone-700 block mb-1">Action Decoder</span>
+                                    <p class="text-xs text-stone-500 leading-relaxed">Transformer dekoduje latentny cel na pełną sekwencję kątów stawów dla wszystkich 23+ silników G1 z uwzględnieniem kinematyki humanoidalnej.</p>
+                                </div>
+                                <div class="p-5 bg-stone-50 rounded-xl border border-stone-100">
+                                    <div class="text-2xl mb-2">🔮</div>
+                                    <span class="text-xs font-black uppercase text-stone-700 block mb-1">Planner (MPC)</span>
+                                    <p class="text-xs text-stone-500 leading-relaxed">Model Predictive Control: na każdym kroku generuje N kandydatów akcji, symuluje je w modelu świata, wybiera optymalną sekwencję – i wykonuje tylko pierwszy krok.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Instalacja UniForm WMA</h3>
+                            <div class="code-block">
+                                <pre><code># Klonowanie repozytorium
+git clone https://github.com/unitreerobotics/unifolm-world-model-action.git
+cd unifolm-world-model-action
+
+# Instalacja zależności (PyTorch 2.1+, CUDA 12.1)
+conda create -n uniform python=3.10 -y
+conda activate uniform
+pip install torch==2.1.0 torchvision --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt
+
+# Pobranie wag pre-trained world model
+python scripts/download_weights.py --model world_model_g1_v1
+
+# Weryfikacja instalacji
+python -c "import uniform; print(uniform.__version__)"</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Trening modelu świata na własnych danych G1</h3>
+                            <p class="text-stone-600 mb-3 text-sm">
+                                World Model uczy się przewidywać przyszłe klatki wideo na podstawie historii obserwacji i wykonywanych akcji. Im więcej nagranych epizodów, tym lepsza jakość predykcji.
+                            </p>
+                            <div class="code-block">
+                                <pre><code># ── Krok 1: Przygotowanie datasetu ──────────────────────────
+# Format: katalog z epizodami, każdy epizod = {frames/, actions.npy}
+python scripts/prepare_dataset.py \
+    --input_dir ~/datasets/g1_rosbag_sessions \
+    --output_dir ~/datasets/g1_uniform_format \
+    --image_size 224 \
+    --fps 30
+
+# ── Krok 2: Trening World Model (VAE + Transformer) ──────────
+python train_world_model.py \
+    --config configs/g1_world_model.yaml \
+    --data_path ~/datasets/g1_uniform_format \
+    --output_dir ./checkpoints/wm_g1_v1 \
+    --batch_size 32 \
+    --num_epochs 100 \
+    --lr 1e-4 \
+    --latent_dim 512 \
+    --pred_horizon 16 \
+    --gpus 0,1
+
+# ── Krok 3: Trening Action Decoder ──────────────────────────
+python train_action_decoder.py \
+    --world_model_ckpt ./checkpoints/wm_g1_v1/best.pt \
+    --data_path ~/datasets/g1_uniform_format \
+    --output_dir ./checkpoints/ad_g1_v1 \
+    --num_joints 23 \
+    --chunk_size 50</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Deployment: Autonomiczna nawigacja przez WMA</h3>
+                            <p class="text-stone-600 mb-3 text-sm">
+                                Poniższy węzeł ROS 2 uruchamia pętlę MPC — w każdym kroku model świata symuluje kilka możliwych ścieżek i wybiera optymalną dla osiągnięcia celu podanego jako obraz docelowy lub instrukcja tekstowa.
+                            </p>
+                            <div class="code-block">
+                                <pre><code>#!/usr/bin/env python3
+# Węzeł ROS 2: UniForm WMA – autonomiczna nawigacja przez model świata
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+import torch, numpy as np
+from PIL import Image as PILImage
+
+# Import komponentów UniForm
+from uniform.world_model import WorldModel
+from uniform.action_decoder import ActionDecoder
+from uniform.planner import MPCPlanner
+
+DEVICE = "cuda:0"
+GOAL_IMAGE_PATH = "/home/g1/goals/target_room_state.jpg"  # cel jako obraz
+
+class WMANavigator(Node):
+    def __init__(self):
+        super().__init__('wma_navigator')
+        self.bridge = CvBridge()
+
+        # Wczytaj komponenty WMA
+        self.get_logger().info('Ładowanie UniForm World Model...')
+        self.world_model = WorldModel.from_pretrained(
+            './checkpoints/wm_g1_v1/best.pt').to(DEVICE)
+        self.action_decoder = ActionDecoder.from_pretrained(
+            './checkpoints/ad_g1_v1/best.pt').to(DEVICE)
+
+        # Planner MPC: 64 kandydatów akcji, horyzont 8 kroków
+        self.planner = MPCPlanner(
+            world_model=self.world_model,
+            action_decoder=self.action_decoder,
+            num_candidates=64,
+            horizon=8,
+            device=DEVICE
+        )
+
+        # Cel: załaduj docelowy stan świata jako latent
+        goal_img = PILImage.open(GOAL_IMAGE_PATH).resize((224, 224))
+        goal_tensor = torch.tensor(np.array(goal_img)).permute(2,0,1) \
+                           .float().unsqueeze(0).to(DEVICE) / 255.0
+        with torch.no_grad():
+            self.goal_latent = self.world_model.encode(goal_tensor)
+        self.get_logger().info('✅ WMA gotowy. Nawiguję do celu...')
+
+        # Historia obserwacji (bufor 8 ostatnich klatek)
+        self.obs_buffer = []
+
+        self.create_subscription(
+            Image, '/camera/color/image_raw', self.on_obs, 10)
+
+        # Publikuj komendy do SDK2 / MoveIt
+        from unitree_sdk2.common import ChannelFactory, ChannelPublisher
+        ChannelFactory.Initialize(0, "eth0")
+        self.sdk_pub = ChannelPublisher("rt/lowcmd")
+        self.sdk_pub.InitPublisher()
+
+    def on_obs(self, msg):
+        frame = self.bridge.imgmsg_to_cv2(msg, 'rgb8')
+        pil   = PILImage.fromarray(frame).resize((224, 224))
+        t     = torch.tensor(np.array(pil)).permute(2,0,1) \
+                     .float().unsqueeze(0).to(DEVICE) / 255.0
+
+        with torch.no_grad():
+            obs_latent = self.world_model.encode(t)
+
+        # Utrzymuj bufor 8 klatek
+        self.obs_buffer.append(obs_latent)
+        if len(self.obs_buffer) < 4:
+            return  # Czekaj na minimum historii
+        if len(self.obs_buffer) > 8:
+            self.obs_buffer.pop(0)
+
+        obs_seq = torch.cat(self.obs_buffer, dim=0).unsqueeze(0)
+
+        # MPC: znajdź optymalną sekwencję akcji
+        with torch.no_grad():
+            best_actions = self.planner.plan(
+                current_obs=obs_seq,
+                goal_latent=self.goal_latent
+            )
+
+        # Wykonaj pierwszy krok optymalnej sekwencji
+        first_action = best_actions[0].cpu().numpy()  # [23 kąty stawów]
+
+        dist_to_goal = self.planner.last_goal_distance
+        self.get_logger().info(
+            f'WMA plan | dystans do celu: {dist_to_goal:.4f} | '
+            f'akcja[0:6]: {first_action[:6].round(3)}'
+        )
+
+        self._send_joint_command(first_action)
+
+    def _send_joint_command(self, joint_angles: np.ndarray):
+        """Wyślij kąty stawów przez SDK2 Low-Level"""
+        from unitree_sdk2.hg.h1_2_arm_sdk import LowCmd
+        cmd = LowCmd()
+        for i, angle in enumerate(joint_angles[:23]):
+            cmd.motor_cmd[i].q   = float(angle)
+            cmd.motor_cmd[i].kp  = 50.0
+            cmd.motor_cmd[i].kd  = 2.0
+            cmd.motor_cmd[i].tau = 0.0
+        self.sdk_pub.Write(cmd)
+
+def main():
+    rclpy.init()
+    rclpy.spin(WMANavigator())
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- Porównanie podejść -->
+                        <hr class="section-divider">
+                        <div class="section-label">⚖️ Część 4 — Porównanie podejść: MediaPipe vs VLA vs WMA</div>
+
+                        <div class="overflow-x-auto rounded-xl border border-stone-100">
+                            <table class="w-full text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-stone-900 text-amber-400">
+                                        <th class="text-left px-4 py-3 font-black">Kryterium</th>
+                                        <th class="text-left px-4 py-3 font-black">MediaPipe / DeepFace</th>
+                                        <th class="text-left px-4 py-3 font-black">OpenVLA (7B)</th>
+                                        <th class="text-left px-4 py-3 font-black">UniForm WMA</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-stone-100 bg-white">
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Latencja</td>
+                                        <td class="px-4 py-3 text-green-600 font-bold">&lt;20 ms (CPU)</td>
+                                        <td class="px-4 py-3 text-amber-600 font-bold">~80 ms (GPU)</td>
+                                        <td class="px-4 py-3 text-red-600 font-bold">~200 ms (GPU)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">VRAM</td>
+                                        <td class="px-4 py-3 text-stone-600">Brak (CPU)</td>
+                                        <td class="px-4 py-3 text-stone-600">16 GB+</td>
+                                        <td class="px-4 py-3 text-stone-600">8–12 GB</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Instrukcje językowe</td>
+                                        <td class="px-4 py-3 text-stone-400">❌ Nie</td>
+                                        <td class="px-4 py-3 text-green-600">✅ Tak (EN/PL po fine-tune)</td>
+                                        <td class="px-4 py-3 text-amber-600">⚠️ Częściowo (cel = obraz)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Planowanie przyszłości</td>
+                                        <td class="px-4 py-3 text-stone-400">❌ Nie</td>
+                                        <td class="px-4 py-3 text-stone-400">❌ Reaktywne</td>
+                                        <td class="px-4 py-3 text-green-600">✅ Tak (MPC / MCTS)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Dane treningowe</td>
+                                        <td class="px-4 py-3 text-stone-600">Nie wymagane</td>
+                                        <td class="px-4 py-3 text-stone-600">Open X-Embodiment (pre-trained)</td>
+                                        <td class="px-4 py-3 text-stone-600">Własne nagrania G1 (min. ~500 epizodów)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Najlepszy do</td>
+                                        <td class="px-4 py-3 text-stone-600">Detekcja twarzy, gesty, teleoperacja</td>
+                                        <td class="px-4 py-3 text-stone-600">Sterowanie ramieniem wg instrukcji, pick &amp; place</td>
+                                        <td class="px-4 py-3 text-stone-600">Złożona nawigacja, długohoryzontowe planowanie</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="info-box p-5 rounded-xl">
+                            <h4 class="font-bold text-green-800">✅ Zalecana architektura hybrydowa dla G1</h4>
+                            <p class="text-sm text-green-700 leading-relaxed">
+                                Najlepsze rezultaty daje połączenie wszystkich trzech warstw: <strong>MediaPipe/DeepFace</strong> do szybkiej detekcji i reakcji na człowieka (latencja &lt;20ms), <strong>OpenVLA</strong> do interpretacji instrukcji językowych i sterowania chwytakami (latencja ~80ms), oraz <strong>UniForm WMA</strong> do planowania długoterminowych sekwencji nawigacyjnych (latencja 200ms, uruchamiana rzadziej). Taka architektura jest odporna na awarie pojedynczych komponentów i skaluje się z możliwościami GPU.
+                            </p>
+                        </div>
+
                     </div>
                 `
             },
@@ -992,7 +1561,7 @@ def analyze_user(frame):
             ───────────────────────────────────────────────────────── */
             {
                 id: 'lerobot',
-                title: 'LeRobot & Imitation learning',
+                title: 'LeRobot & Imitation Learning',
                 icon: '🧠',
                 links: [
                     {name: 'Hugging Face LeRobot', url: 'https://huggingface.co/lerobot'},
@@ -1023,7 +1592,7 @@ def analyze_user(frame):
                         <hr class="section-divider">
 
                         <!-- KROK 1: Instalacja -->
-                        <div class="section-label">Krok 1 — Instalacja</div>
+                        <div class="section-label">📦 Krok 1 — Instalacja</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Instalacja LeRobot</h3>
                             <p class="text-stone-600 mb-3">Biblioteka wymaga Pythona 3.10+ oraz wsparcia dla akceleracji GPU (CUDA).</p>
@@ -1041,7 +1610,7 @@ pip install opencv-python pynput</code></pre>
                         <hr class="section-divider">
 
                         <!-- KROK 2: Zbieranie danych -->
-                        <div class="section-label">Krok 2 — Zbieranie danych</div>
+                        <div class="section-label">🎥 Krok 2 — Zbieranie Danych</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Struktura Datasetu G1</h3>
                             <p class="text-stone-600 mb-4">Proces polega na nagrywaniu pary: <strong>Obraz z kamery robota</strong> + <strong>Kąty silników</strong> (state) wysyłane przez człowieka podczas teleoperacji.</p>
@@ -1074,7 +1643,7 @@ python lerobot/scripts/record.py \
                         <hr class="section-divider">
 
                         <!-- KROK 3: Trening -->
-                        <div class="section-label">Krok 3 — Trening polityki AI</div>
+                        <div class="section-label">🔬 Krok 3 — Trening Polityki AI</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Trening z architekturą ACT</h3>
                             <p class="text-stone-600 mb-3">Uruchomienie treningu z wykorzystaniem architektury ACT dla Twojego datasetu G1:</p>
@@ -1091,7 +1660,7 @@ python lerobot/scripts/record.py \
                         <hr class="section-divider">
 
                         <!-- KROK 4: Deployment -->
-                        <div class="section-label">Krok 4 — Deployment na G1</div>
+                        <div class="section-label">🚀 Krok 4 — Deployment na G1</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Inferencja w czasie rzeczywistym</h3>
                             <p class="text-stone-600 mb-3">Po wytrenowaniu modelu, polityka steruje robotem w czasie rzeczywistym, „widząc" świat przez kamerę.</p>
@@ -1104,7 +1673,7 @@ policy = lerobot.Policy.from_pretrained("outputs/train/g1_act_v1/checkpoints/las
 
 # Pętla sterowania
 while True:
-    obs = robot.get_observations()  # Obraz + stan
+    obs = robot.get_observations()  # Obraz + Stan
     action = policy.predict(obs)    # Inferencja AI
     robot.set_joint_targets(action) # Ruch silników</code></pre>
                             </div>
@@ -1271,7 +1840,7 @@ if (success) {
             ───────────────────────────────────────────────────────── */
             {
                 id: 'nvidia_stack',
-                title: 'Soft NVIDIA: Sim & RL',
+                title: 'Stos NVIDIA: Sim & RL',
                 icon: '🟢',
                 links: [
                     {name: 'NVIDIA Omniverse', url: 'https://developer.nvidia.com/omniverse'},
@@ -1406,7 +1975,7 @@ cd IsaacLab
             ───────────────────────────────────────────────────────── */
             {
                 id: 'hardware',
-                title: 'Wymagania i deploy',
+                title: 'Wymagania i Deploy',
                 icon: '🖥️',
                 links: [{name: 'Isaac Sim Docs', url: 'https://docs.isaacsim.omniverse.nvidia.com/'}],
                 description: 'Zasoby sprzętowe potrzebne do uruchomienia pełnego stosu NVIDIA i wdrożenia modeli na robot.',
@@ -1464,7 +2033,7 @@ cd IsaacLab
             ═══════════════════════════════════════════════════════════ */
             {
                 id: 'autonomous_mission',
-                title: 'Karkołomna misja autonomicznego G1',
+                title: 'Autonomiczna Misja G1',
                 icon: '🧭',
                 links: [
                     {name: 'Nav2 Docs', url: 'https://docs.nav2.org/'},
@@ -1511,7 +2080,7 @@ cd IsaacLab
 
                         <!-- ─── ETAP 1: NAWIGACJA ──────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🗺️ Etap 1 — Autonomiczna nawigacja (SLAM + Nav2)</div>
+                        <div class="section-label">🗺️ Etap 1 — Autonomiczna Nawigacja (SLAM + Nav2)</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Zanim G1 zacznie cokolwiek robić, musi wiedzieć, gdzie jest i jak się poruszać bezpiecznie. Używamy dwóch warstw: <strong>SLAM</strong> (jednoczesne mapowanie i lokalizacja) buduje mapę pomieszczenia, a <strong>Nav2</strong> planuje i wykonuje trasy z unikaniem przeszkód.
@@ -1764,7 +2333,7 @@ if __name__ == '__main__':
 
                         <!-- ─── ETAP 3: CHWYT ─────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🦾 Etap 3 — Planowanie i wykonanie chwytu</div>
+                        <div class="section-label">🦾 Etap 3 — Planowanie i Wykonanie Chwytu</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Mając pozycję 3D pudełka, robot musi wygenerować optymalną pozę chwytu i wykonać ruch ramieniem bez kolizji. Pipeline łączy <strong>GraspNet</strong> (predykcja pozy) z <strong>MoveIt 2</strong> (planowanie trajektorii).
@@ -1866,7 +2435,7 @@ class GraspExecutor(Node):
 
                         <!-- ─── ETAP 4: DETEKCJA CZŁOWIEKA ────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">👤 Etap 4 — Detekcja i identyfikacja człowieka</div>
+                        <div class="section-label">👤 Etap 4 — Detekcja i Identyfikacja Człowieka</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Po wykonaniu zadania robot musi znaleźć człowieka w pomieszczeniu. Stosujemy warstwowy pipeline: YOLOv8 wykrywa sylwetkę (szybkie), MediaPipe analizuje postawę ciała, a DeepFace rozpoznaje twarz i odczytuje nastrój.
@@ -1972,7 +2541,7 @@ if __name__ == '__main__':
 
                         <!-- ─── ETAP 5: GESTY ─────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">👋 Etap 5 — Powitanie: gesty ramieniem</div>
+                        <div class="section-label">👋 Etap 5 — Powitanie: Gesty Ramieniem</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Robot wykonuje sekwencję gestów ramieniem przez SDK2 Low-Level — animowane, naturalne powitanie składa się z podniesienia ramienia, machania i powrotu do pozycji neutralnej.
@@ -2061,7 +2630,7 @@ print("✅ Gest zakończony")</code></pre>
 
                         <!-- ─── ETAP 5b: MOWA ──────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🔊 Etap 5b — synteza mowy (TTS)</div>
+                        <div class="section-label">🔊 Etap 5b — Synteza Mowy (TTS)</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Równolegle z gestem robot mówi do człowieka. Stosujemy <strong>Coqui TTS</strong> do polskiej, naturalnie brzmiącej syntezy offline lub <strong>pyttsx3</strong> jako lekką alternatywę bez GPU.
@@ -2157,7 +2726,7 @@ if __name__ == '__main__':
 
                         <!-- ─── ORCHESTRATOR ───────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🎼 Orkiestrator misji — spinanie wszystkiego do kupy</div>
+                        <div class="section-label">🎼 Orkiestrator Misji — Spinanie wszystkiego razem</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Wszystkie etapy łączy węzeł-orkiestrator oparty na <strong>maszynie stanów</strong> (Behavior Tree lub prosty FSM). Decyduje, który krok jest aktywny i przekazuje dane między modułami.

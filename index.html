@@ -1,0 +1,2437 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unitree G1 EDU-U6: Kompendium Inżynierskie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --bg-main: #fcfcfb;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .code-container::-webkit-scrollbar { height: 6px; width: 6px; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+
+        #main-scroll-area {
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .pro-tip    { border-left: 4px solid #3b82f6; background: #eff6ff; }
+        .critical-warn { border-left: 4px solid #ef4444; background: #fef2f2; }
+        .info-box   { border-left: 4px solid #10b981; background: #f0fdf4; }
+
+        .code-block {
+            background: #1c1917;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            color: #f59e0b;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-item-active {
+            background: #f59e0b;
+            color: #0c0a09 !important;
+            font-weight: 700;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+
+        .step-content { animation: fadeIn 0.8s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 2px dashed #e7e5e4;
+            margin: 2.5rem 0;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f59e0b;
+            color: #0c0a09;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+
+        .nvidia-badge {
+            display: inline-block;
+            background: #76b900;
+            color: #000;
+            font-size: 0.6rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body class="text-stone-900">
+
+    <div class="fixed top-0 left-0 w-full h-1 bg-stone-200 z-[100]">
+        <div id="top-progress" class="h-full bg-amber-500 transition-all duration-500" style="width: 0%"></div>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 w-80 bg-stone-950 text-stone-400 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-50 flex flex-col border-r border-stone-800">
+            <div class="p-8 border-b border-stone-800">
+                <div class="flex items-center gap-3 mb-2">
+                    <h1 class="text-white font-extrabold text-3xl tracking-tight leading-none">Robo<br></h1>
+                    <div class="w-14 h-8 bg-amber-500 rounded-lg flex items-center justify-center text-stone-950 font-black text-2xl">hub</div>
+                </div>
+                <div><span class="text-amber-500 text-xs font-medium">Unitree Deployment Portal</span></div>
+            </div>
+
+            <nav id="nav-list" class="flex-1 overflow-y-auto p-4 space-y-1 custom-scrollbar">
+                <!-- Injected via JS -->
+            </nav>
+
+            <div class="p-6 bg-stone-900/50 border-t text-medium border-stone-800">
+                <div class="flex justify-between text-[10px] font-bold uppercase mb-2">
+                    <span>Gotowość systemu</span>
+                    <span id="progress-val">0%</span>
+                </div>
+                <div class="h-1 w-full bg-stone-800 rounded-full overflow-hidden">
+                    <div id="inner-progress" class="h-full bg-amber-500 transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-80 flex flex-col h-screen overflow-hidden">
+
+            <button onclick="toggleSidebar()" class="lg:hidden absolute top-4 left-4 z-[60] p-2 bg-white rounded-lg shadow-md border border-stone-200">
+                <span class="text-2xl">☰</span>
+            </button>
+
+            <div id="main-scroll-area">
+                <div id="content-mount" class="p-6 lg:p-16 max-w-4xl mx-auto w-full">
+                    <!-- Section Content Injected by JS -->
+                </div>
+            </div>
+
+            <!-- Sticky Footer -->
+            <footer class="h-20 bg-white/90 backdrop-blur-md border-t border-stone-200 px-6 flex items-center justify-between z-40">
+                <button id="prev-btn" onclick="changeModule(-1)" class="px-6 py-2 text-stone-400 font-bold hover:text-amber-600 transition-all disabled:opacity-0">
+                    ← Powrót
+                </button>
+                <div id="footer-label" class="hidden md:block text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                    Status: Konfigurowanie
+                </div>
+                <button id="next-btn" onclick="changeModule(1)" class="px-8 py-3 bg-stone-900 text-white font-bold rounded-xl hover:bg-amber-600 transition-all shadow-lg active:scale-95">
+                    Następny Krok →
+                </button>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        const modules = [
+
+            /* ─────────────────────────────────────────────────────────
+               MODUŁ 1: PRZYGOTOWANIE SYSTEMU
+               (połączenie: Ubuntu 22.04 + Konfiguracja OS + Sieć & CycloneDDS)
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'setup',
+                title: 'Przygotowanie Systemu',
+                icon: '🐧',
+                links: [
+                    {name: 'Ubuntu 22.04', url: 'https://releases.ubuntu.com/jammy/'},
+                    {name: 'NVIDIA Drivers', url: 'https://www.nvidia.com/en-us/drivers/'},
+                    {name: 'CycloneDDS', url: 'https://github.com/eclipse-cyclonedds/cyclonedds'}
+                ],
+                description: 'Kompletna konfiguracja Ubuntu 22.04 dla Unitree G1 EDU – od instalacji jądra niskolatencyjnego, przez sterowniki NVIDIA, po strojenie warstwy sieciowej DDS.',
+                details: `
+                    <div class="space-y-6 step-content">
+
+                        <!-- CZĘŚĆ 1: Ubuntu i narzędzia -->
+                        <div class="section-label">🐧 Część 1 — Ubuntu 22.04 &amp; Narzędzia bazowe</div>
+
+                        <p class="text-stone-600">Unitree G1 komunikuje się przez protokół UDP. Aby zapewnić stabilność, system musi być zoptymalizowany pod kątem opóźnień sieciowych oraz obsługi kart NVIDIA wymaganych przez Isaac Sim.</p>
+
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
+                            <h4 class="font-bold text-amber-800 mb-2">Ważne przed startem</h4>
+                            <ul class="text-sm text-amber-700 list-disc ml-5 space-y-1">
+                                <li>Zainstaluj Ubuntu 22.04 w wersji Desktop (zalecane jądro 5.15+ LTS).</li>
+                                <li>Nie instaluj Wayland – używaj Xorg dla pełnej kompatybilności z NVIDIA.</li>
+                                <li>Odłącz połączenie Wi-Fi podczas konfiguracji interfejsu Ethernet z robotem.</li>
+                            </ul>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">1. Aktualizacja i podstawowe narzędzia</h3>
+                            <div class="code-block">
+                                <pre><code>sudo apt update && sudo apt upgrade -y
+sudo apt install build-essential cmake git curl python3-pip -y</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">2. Sterowniki NVIDIA (wymagane przez Isaac Sim)</h3>
+                            <p class="text-stone-500 text-sm italic mb-3">Wymagane do symulacji fizycznej i renderowania RTX.</p>
+                            <div class="code-block">
+                                <pre><code>sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt update
+sudo apt install nvidia-driver-535 -y
+# Zrestartuj system, następnie sprawdź: nvidia-smi</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- CZĘŚĆ 2: Konfiguracja OS -->
+                        <div class="section-label">⚙️ Część 2 — Konfiguracja OS pod niskie opóźnienia</div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">3. Jądro lowlatency</h3>
+                            <p class="text-stone-600 mb-3">Robot G1 przesyła tysiące pakietów na sekundę. Standardowe jądro Ubuntu może powodować „jitter". Zaleca się instalację jądra <strong>lowlatency</strong>.</p>
+                            <div class="code-block">
+                                <pre><code># Instalacja jądra lowlatency
+sudo apt install linux-image-lowlatency linux-headers-lowlatency -y
+# Po restarcie sprawdź: uname -a</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="critical-warn p-5 rounded-xl">
+                            <h4 class="font-bold text-red-800">Ustawienia NVIDIA PowerMizer</h4>
+                            <p class="text-sm text-red-700">W panelu NVIDIA X Server Settings ustaw profil PowerMizer na <strong>"Prefer Maximum Performance"</strong>. To eliminuje skoki opóźnień przy wnioskowaniu AI.</p>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- CZĘŚĆ 3: Sieć i CycloneDDS -->
+                        <div class="section-label">📶 Część 3 — Sieć, CycloneDDS i zależności SDK</div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">4. Konfiguracja interfejsu sieciowego</h3>
+                            <p class="text-stone-600 mb-3">G1 komunikuje się przez dedykowany port Ethernet. Musisz wymusić, aby pakiety DDS nie wychodziły przez Wi-Fi.</p>
+                            <div class="code-block">
+                                <pre><code># Sprawdź nazwę interfejsu (np. enp3s0)
+ip link show
+
+# Utwórz plik konfiguracyjny CycloneDDS
+cat <<'EOF' > ~/cyclonedds.xml
+&lt;CycloneDDS&gt;
+  &lt;Domain&gt;
+    &lt;General&gt;
+      &lt;NetworkInterfaceAddress&gt;enp3s0&lt;/NetworkInterfaceAddress&gt;
+      &lt;AllowMulticast&gt;true&lt;/AllowMulticast&gt;
+    &lt;/General&gt;
+  &lt;/Domain&gt;
+&lt;/CycloneDDS&gt;
+EOF
+
+# Dodaj do ~/.bashrc dla trwałości
+echo 'export CYCLONEDDS_URI=file:///home/$USER/cyclonedds.xml' >> ~/.bashrc
+source ~/.bashrc</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">5. Zależności systemowe i kompilacja SDK2</h3>
+                            <p class="text-stone-600 mb-3">Zanim pobierzemy SDK, przygotujemy system do kompilacji dużych projektów C++ z obsługą CycloneDDS.</p>
+                            <div class="code-block">
+                                <pre><code>sudo apt install build-essential cmake git libboost-all-dev libpcap-dev -y
+# Instalacja CycloneDDS (wymagane przez SDK2 i ROS2)
+sudo apt install ros-humble-cyclonedds -y
+
+# Kompilacja Unitree SDK2 z obsługą Pythona
+git clone https://github.com/unitreerobotics/unitree_sdk2.git
+cd unitree_sdk2 && mkdir build && cd build
+cmake .. -DUNITREE_SDK2_PYTHON=ON
+make -j$(nproc)
+sudo make install</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="info-box p-5 rounded-xl">
+                            <h4 class="font-bold text-green-800">✅ System gotowy</h4>
+                            <p class="text-sm text-green-700">Po wykonaniu powyższych kroków masz: jądro niskolatencyjne, sterowniki NVIDIA 535, skonfigurowany interfejs DDS i skompilowane biblioteki SDK2. Możesz przejść do konfiguracji ROS 2.</p>
+                        </div>
+
+                    </div>
+                `
+            },
+
+            /* ─────────────────────────────────────────────────────────
+               MODUŁ 2: ROS 2 & UNITREE SDK2
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'ros2_sdk2',
+                title: 'ROS 2 & Unitree SDK2',
+                icon: '🤖',
+                links: [
+                    {name: 'Unitree ROS2 Repo', url: 'https://github.com/unitreerobotics/unitree_ros2'},
+                    {name: 'SDK2 Examples', url: 'https://github.com/unitreerobotics/unitree_sdk2'},
+                    {name: 'ROS 2 Humble Docs', url: 'https://docs.ros.org/en/humble/index.html'}
+                ],
+                description: 'Pełen stos sterowania robotem: architektura węzłów ROS 2, tematy G1, launch files, tf2 oraz niskopoziomowy dostęp do silników przez Unitree SDK2.',
+                details: `
+                    <div class="space-y-6 step-content">
+
+                        <!-- ═══════════════════════════════════════════ -->
+                        <div class="section-label">🏛️ Architektura — Jak działa ROS 2 z G1?</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            ROS 2 (Robot Operating System 2) to nie system operacyjny, lecz <strong>middleware</strong> – warstwa komunikacyjna łącząca niezależne procesy (węzły) przez ustandaryzowane interfejsy. Unitree G1 EDU integruje się z ROS 2 przez mostek DDS, który przekształca wewnętrzne pakiety UDP robota na standardowe wiadomości ROS 2.
+                        </p>
+
+                        <!-- Diagram architektury -->
+                        <div class="bg-stone-950 rounded-2xl p-6 text-sm font-mono">
+                            <p class="text-stone-500 text-[10px] uppercase tracking-widest mb-4">Diagram przepływu danych</p>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex items-center gap-3">
+                                    <span class="px-3 py-1 bg-amber-500 text-stone-900 font-black rounded">G1 Hardware</span>
+                                    <span class="text-stone-500">──UDP/DDS──▶</span>
+                                    <span class="px-3 py-1 bg-stone-700 text-amber-400 rounded">unitree_ros2 Bridge</span>
+                                    <span class="text-stone-500">──Topics──▶</span>
+                                    <span class="px-3 py-1 bg-stone-700 text-green-400 rounded">Twój węzeł ROS 2</span>
+                                </div>
+                                <div class="flex items-center gap-3 pl-32">
+                                    <span class="text-stone-500">◀──Commands──</span>
+                                    <span class="px-3 py-1 bg-stone-700 text-blue-400 rounded">/cmd_vel, /joint_cmd</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kluczowe koncepty -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-white border border-stone-100 rounded-xl shadow-sm">
+                                <span class="block text-amber-500 font-black text-xs uppercase mb-2">📡 Tematy (Topics)</span>
+                                <p class="text-xs text-stone-500">Strumień danych publish/subscribe. Węzły emitują dane bez wiedzy o odbiorcach. Idealne dla sensorów i stanów.</p>
+                            </div>
+                            <div class="p-4 bg-white border border-stone-100 rounded-xl shadow-sm">
+                                <span class="block text-blue-500 font-black text-xs uppercase mb-2">🔧 Serwisy (Services)</span>
+                                <p class="text-xs text-stone-500">Komunikacja żądanie–odpowiedź (request/response). Synchroniczna. Dobra dla jednorazowych komend: "usiądź", "wstań".</p>
+                            </div>
+                            <div class="p-4 bg-white border border-stone-100 rounded-xl shadow-sm">
+                                <span class="block text-green-500 font-black text-xs uppercase mb-2">🎯 Akcje (Actions)</span>
+                                <p class="text-xs text-stone-500">Długotrwałe zadania z feedbackiem. Np. "przejdź 5 metrów" z raportowaniem postępu co 100ms.</p>
+                            </div>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- ═══════════════════════════════════════════ -->
+                        <div class="section-label">📦 Część 1 — Instalacja i Workspace</div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">1. Instalacja ROS 2 Humble</h3>
+                            <p class="text-stone-600 mb-3">Jeśli ROS 2 nie jest jeszcze zainstalowany, wykonaj poniższą sekwencję. Zalecane na Ubuntu 22.04 LTS.</p>
+                            <div class="code-block">
+                                <pre><code># Dodaj klucze GPG i repozytorium ROS 2
+sudo apt install software-properties-common curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
+    -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
+    http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" \
+    | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+# Instalacja pełnej wersji desktop (z RViz2, rqt itp.)
+sudo apt update
+sudo apt install ros-humble-desktop -y
+sudo apt install python3-colcon-common-extensions python3-rosdep -y
+
+# Dodaj do ~/.bashrc
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">2. Budowanie Workspace Unitree ROS 2</h3>
+                            <p class="text-stone-600 mb-3">Pakiet <code>unitree_ros2</code> zawiera definicje wiadomości (msg), interfejsy serwisów i węzeł mostu DDS dla G1.</p>
+                            <div class="code-block">
+                                <pre><code># Tworzenie przestrzeni roboczej
+mkdir -p ~/unitree_ws/src && cd ~/unitree_ws/src
+git clone https://github.com/unitreerobotics/unitree_ros2.git
+
+# Inicjalizacja rosdep i instalacja zależności
+cd ~/unitree_ws
+sudo rosdep init && rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+
+# Kompilacja z optymalizacją
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+# Stałe źródłowanie workspace (dodaj do ~/.bashrc)
+echo "source ~/unitree_ws/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="pro-tip p-5 rounded-xl">
+                            <h4 class="font-bold text-blue-800">Weryfikacja instalacji</h4>
+                            <p class="text-sm text-blue-700">Po kompilacji uruchom <code>ros2 pkg list | grep unitree</code>. Powinieneś zobaczyć pakiety: <code>unitree_go</code>, <code>unitree_hg</code>, <code>unitree_ros2</code>. Jeśli robot jest podłączony, <code>ros2 topic list</code> pokaże aktywne tematy G1.</p>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- ═══════════════════════════════════════════ -->
+                        <div class="section-label">📡 Część 2 — Tematy i Komendy G1</div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">3. Mapa kluczowych tematów ROS 2 dla G1</h3>
+                            <p class="text-stone-600 mb-4">Poniższa tabela pokazuje najważniejsze tematy dostępne po uruchomieniu mostu Unitree ROS 2.</p>
+
+                            <div class="overflow-x-auto rounded-xl border border-stone-100">
+                                <table class="w-full text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-stone-900 text-amber-400">
+                                            <th class="text-left px-4 py-3 font-black">Temat (Topic)</th>
+                                            <th class="text-left px-4 py-3 font-black">Typ wiadomości</th>
+                                            <th class="text-left px-4 py-3 font-black">Kierunek</th>
+                                            <th class="text-left px-4 py-3 font-black">Opis</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-stone-100">
+                                        <tr class="bg-white hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-mono text-blue-600">/cmd_vel</td>
+                                            <td class="px-4 py-3 font-mono text-stone-500">geometry_msgs/Twist</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-[9px] font-bold">PUB →</span></td>
+                                            <td class="px-4 py-3 text-stone-600">Komenda prędkości liniowej i kątowej (chód)</td>
+                                        </tr>
+                                        <tr class="bg-white hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-mono text-blue-600">/joint_states</td>
+                                            <td class="px-4 py-3 font-mono text-stone-500">sensor_msgs/JointState</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[9px] font-bold">← SUB</span></td>
+                                            <td class="px-4 py-3 text-stone-600">Pozycje, prędkości i momenty 23+ stawów</td>
+                                        </tr>
+                                        <tr class="bg-white hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-mono text-blue-600">/imu/data</td>
+                                            <td class="px-4 py-3 font-mono text-stone-500">sensor_msgs/Imu</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[9px] font-bold">← SUB</span></td>
+                                            <td class="px-4 py-3 text-stone-600">Dane IMU: orientacja, przyspieszenie, żyroskop</td>
+                                        </tr>
+                                        <tr class="bg-white hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-mono text-blue-600">/odom</td>
+                                            <td class="px-4 py-3 font-mono text-stone-500">nav_msgs/Odometry</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[9px] font-bold">← SUB</span></td>
+                                            <td class="px-4 py-3 text-stone-600">Estymowana pozycja i orientacja w przestrzeni</td>
+                                        </tr>
+                                        <tr class="bg-white hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-mono text-blue-600">/camera/color/image_raw</td>
+                                            <td class="px-4 py-3 font-mono text-stone-500">sensor_msgs/Image</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[9px] font-bold">← SUB</span></td>
+                                            <td class="px-4 py-3 text-stone-600">Obraz RGB z kamery głowowej G1</td>
+                                        </tr>
+                                        <tr class="bg-white hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-mono text-blue-600">/lf/lowstate</td>
+                                            <td class="px-4 py-3 font-mono text-stone-500">unitree_hg/LowState</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[9px] font-bold">← SUB</span></td>
+                                            <td class="px-4 py-3 text-stone-600">Pełny stan niskopoziomowy (silniki, IMU, kontakt)</td>
+                                        </tr>
+                                        <tr class="bg-white hover:bg-stone-50">
+                                            <td class="px-4 py-3 font-mono text-blue-600">/lf/lowcmd</td>
+                                            <td class="px-4 py-3 font-mono text-stone-500">unitree_hg/LowCmd</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-[9px] font-bold">PUB →</span></td>
+                                            <td class="px-4 py-3 text-stone-600">Bezpośrednie komendy do silników (Kp, Kd, Torque)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">4. Podstawowe komendy CLI ROS 2</h3>
+                            <div class="code-block">
+                                <pre><code># Listowanie aktywnych tematów
+ros2 topic list
+
+# Podgląd danych z IMU w czasie rzeczywistym
+ros2 topic echo /imu/data
+
+# Sprawdzenie częstotliwości publikacji tematu
+ros2 topic hz /joint_states
+
+# Wysłanie jednorazowej komendy ruchu (x=0.3 m/s do przodu)
+ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist \
+  "{linear: {x: 0.3, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+# Zapis wszystkich tematów do pliku bag (rejestracja sesji)
+ros2 bag record -a -o ~/session_2024_g1
+
+# Odtworzenie nagranej sesji
+ros2 bag play ~/session_2024_g1</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- ═══════════════════════════════════════════ -->
+                        <div class="section-label">🐍 Część 3 — Własne Węzły ROS 2 (Python)</div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">5. Subskrybent stanu robota (Subscriber)</h3>
+                            <p class="text-stone-600 mb-3">Podstawowy wzorzec: węzeł nasłuchuje na temat <code>/joint_states</code> i loguje pozycje stawów nóg.</p>
+                            <div class="code-block">
+                                <pre><code>#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+
+class G1StateMonitor(Node):
+    def __init__(self):
+        super().__init__('g1_state_monitor')
+        self.subscription = self.create_subscription(
+            JointState,
+            '/joint_states',
+            self.joint_callback,
+            10  # QoS – głębokość kolejki
+        )
+        self.get_logger().info('Monitor stanu G1 uruchomiony.')
+
+    def joint_callback(self, msg: JointState):
+        # Wyświetl nazwy i pozycje pierwszych 6 stawów (nogi)
+        for name, pos in zip(msg.name[:6], msg.position[:6]):
+            self.get_logger().info(f'  {name:30s}: {pos:+.4f} rad')
+
+def main():
+    rclpy.init()
+    node = G1StateMonitor()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">6. Publisher komendy chodu (Publisher)</h3>
+                            <p class="text-stone-600 mb-3">Węzeł, który przez 5 sekund wysyła komendę chodu do przodu, następnie zatrzymuje robota.</p>
+                            <div class="code-block">
+                                <pre><code>#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+import time
+
+class G1WalkForward(Node):
+    def __init__(self):
+        super().__init__('g1_walk_forward')
+        self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.timer = self.create_timer(0.1, self.publish_cmd)  # 10 Hz
+        self.start_time = time.time()
+        self.duration = 5.0  # sekundy chodu
+        self.get_logger().info('Start: Robot idzie do przodu przez 5s...')
+
+    def publish_cmd(self):
+        msg = Twist()
+        elapsed = time.time() - self.start_time
+
+        if elapsed < self.duration:
+            msg.linear.x = 0.3   # 0.3 m/s do przodu
+            msg.angular.z = 0.0  # brak obrotu
+        else:
+            msg.linear.x = 0.0   # STOP
+            self.get_logger().info('Zatrzymanie robota.')
+            self.timer.cancel()
+
+        self.publisher.publish(msg)
+
+def main():
+    rclpy.init()
+    node = G1WalkForward()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">7. Węzeł łączony: Odczyt IMU + Logowanie do pliku</h3>
+                            <p class="text-stone-600 mb-3">Praktyczny węzeł rejestrujący dane z IMU do pliku CSV – przydatny przy analizie stabilności chodu.</p>
+                            <div class="code-block">
+                                <pre><code>#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Imu
+import csv, math, time
+
+class ImuLogger(Node):
+    def __init__(self):
+        super().__init__('g1_imu_logger')
+        self.sub = self.create_subscription(Imu, '/imu/data', self.imu_cb, 50)
+        self.csvfile = open('/tmp/g1_imu_log.csv', 'w', newline='')
+        self.writer = csv.writer(self.csvfile)
+        self.writer.writerow(['timestamp', 'roll_deg', 'pitch_deg',
+                              'accel_x', 'accel_y', 'accel_z'])
+        self.get_logger().info('Rejestracja IMU → /tmp/g1_imu_log.csv')
+
+    def imu_cb(self, msg: Imu):
+        q = msg.orientation
+        # Konwersja quaternion → kąty Eulera (roll, pitch)
+        sinr = 2.0 * (q.w * q.x + q.y * q.z)
+        cosr = 1.0 - 2.0 * (q.x**2 + q.y**2)
+        roll = math.degrees(math.atan2(sinr, cosr))
+
+        sinp = 2.0 * (q.w * q.y - q.z * q.x)
+        pitch = math.degrees(math.asin(max(-1.0, min(1.0, sinp))))
+
+        self.writer.writerow([
+            time.time(),
+            round(roll, 3), round(pitch, 3),
+            msg.linear_acceleration.x,
+            msg.linear_acceleration.y,
+            msg.linear_acceleration.z
+        ])
+
+    def destroy_node(self):
+        self.csvfile.close()
+        super().destroy_node()
+
+def main():
+    rclpy.init()
+    node = ImuLogger()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- ═══════════════════════════════════════════ -->
+                        <div class="section-label">🚀 Część 4 — Launch Files i Parametry</div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">8. Plik Launch – uruchamianie wielu węzłów jednocześnie</h3>
+                            <p class="text-stone-600 mb-3">Launch files pozwalają jedną komendą uruchomić most DDS, monitor stanu i wizualizację w RViz2.</p>
+                            <div class="code-block">
+                                <pre><code># Plik: ~/unitree_ws/src/my_g1_pkg/launch/g1_full.launch.py
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+
+def generate_launch_description():
+    return LaunchDescription([
+        # Argument: interfejs sieciowy (domyślnie eth0)
+        DeclareLaunchArgument('interface', default_value='eth0'),
+
+        # Most DDS ↔ ROS 2
+        Node(
+            package='unitree_ros2',
+            executable='unitree_ros2_bridge',
+            name='g1_bridge',
+            parameters=[{'network_interface': LaunchConfiguration('interface')}],
+            output='screen'
+        ),
+
+        # Monitor stanu (nasz węzeł)
+        Node(
+            package='my_g1_pkg',
+            executable='state_monitor',
+            name='g1_state_monitor',
+            output='screen'
+        ),
+
+        # RViz2 z predefiniowaną konfiguracją
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', '/path/to/g1_config.rviz'],
+        ),
+    ])</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <pre><code># Uruchomienie z domyślnym interfejsem
+ros2 launch my_g1_pkg g1_full.launch.py
+
+# Uruchomienie z niestandardowym interfejsem sieciowym
+ros2 launch my_g1_pkg g1_full.launch.py interface:=enp3s0</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- ═══════════════════════════════════════════ -->
+                        <div class="section-label">🗺️ Część 5 — tf2: System Transformacji</div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">9. Drzewo transformacji G1 (tf2)</h3>
+                            <p class="text-stone-600 mb-3">
+                                <strong>tf2</strong> to biblioteka śledząca wzajemne położenie wszystkich układów odniesienia robota w czasie. Pozwala zapytać: „gdzie jest chwytaк prawej ręki względem kamery?"
+                            </p>
+                            <div class="code-block">
+                                <pre><code># Podgląd aktualnego drzewa transformacji
+ros2 run tf2_tools view_frames
+
+# Przelicz pozycję punktu z układu kamery do układu świata
+ros2 run tf2_ros tf2_echo world camera_link
+
+# Python: pobranie transformacji między układami
+import rclpy
+from rclpy.node import Node
+from tf2_ros import Buffer, TransformListener
+
+class TfReader(Node):
+    def __init__(self):
+        super().__init__('tf_reader')
+        self.tf_buffer = Buffer()
+        self.tf_listener = TransformListener(self.tf_buffer, self)
+        self.timer = self.create_timer(1.0, self.get_transform)
+
+    def get_transform(self):
+        try:
+            t = self.tf_buffer.lookup_transform(
+                'base_link',        # układ docelowy
+                'right_hand_link',  # układ źródłowy
+                rclpy.time.Time()   # najnowsza transformacja
+            )
+            pos = t.transform.translation
+            self.get_logger().info(
+                f'Prawa dłoń → base: x={pos.x:.3f}, y={pos.y:.3f}, z={pos.z:.3f}'
+            )
+        except Exception as e:
+            self.get_logger().warn(f'Transformacja niedostępna: {e}')</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- ═══════════════════════════════════════════ -->
+                        <div class="section-label">🏗️ Część 6 — Unitree SDK2 (Low-Level Control)</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            SDK2 umożliwia <strong>bezpośredni</strong> dostęp do silników G1 z pominięciem ROS 2 – niezbędny przy implementacji własnych kontrolerów balansu lub Reinforcement Learning. Komunikuje się przez DDS bezpośrednio z kontrolerem ruchu robota.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-2">
+                            <div class="p-5 bg-stone-900 text-white rounded-xl">
+                                <span class="text-amber-400 font-black text-xs uppercase block mb-2">High-Level (Sport Mode)</span>
+                                <p class="text-xs opacity-70 leading-relaxed">Wysyłasz komendy semantyczne: „idź do przodu", „skręć w lewo", „usiądź". Robot sam dba o balans, kinematykę i planowanie stóp. Bezpieczne dla początkujących.</p>
+                            </div>
+                            <div class="p-5 bg-stone-900 text-white rounded-xl">
+                                <span class="text-amber-400 font-black text-xs uppercase block mb-2">Low-Level (Joint Control)</span>
+                                <p class="text-xs opacity-70 leading-relaxed">Pełna kontrola każdego z 23+ silników: moment obrotowy (Torque), sztywność (Kp) i tłumienie (Kd) per staw. Wymaga własnego kontrolera balansu. Idealne do RL.</p>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">10. Kompilacja SDK2 i Python Wrapper</h3>
+                            <div class="code-block">
+                                <pre><code>git clone https://github.com/unitreerobotics/unitree_sdk2.git
+cd unitree_sdk2 && mkdir build && cd build
+cmake .. -DUNITREE_SDK2_PYTHON=ON
+make -j$(nproc) && sudo make install
+
+# Instalacja Python bindings
+cd python && pip install .
+
+# Weryfikacja
+python3 -c "import unitree_sdk2; print('SDK2 OK')"</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="critical-warn p-5 rounded-xl">
+                            <h4 class="font-bold text-red-800">⚠️ Kolejność startu w trybie Low-Level</h4>
+                            <p class="text-sm text-red-700">
+                                <strong>1.</strong> Robot musi być zawieszony (nogi w powietrzu) lub leżeć. &nbsp;
+                                <strong>2.</strong> Uruchom skrypt z Kp = 0. &nbsp;
+                                <strong>3.</strong> Stopniowo zwiększaj Kp przez kilkanaście sekund. &nbsp;
+                                Nagłe ustawienie wysokiego Kp wzbudza oscylacje, które mogą trwale uszkodzić przekładnie silników.
+                            </p>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">11. Sterowanie stawem kolanowym (Python SDK2)</h3>
+                            <p class="text-stone-600 mb-3">Kompletny przykład: ustawienie pozycji stawu kolanowego prawej nogi z kontrolerem PD.</p>
+                            <div class="code-block">
+                                <pre><code>from unitree_sdk2.common import ChannelFactory
+from unitree_sdk2.hg.h1_2_arm_sdk import LowCmd, LowState
+from unitree_sdk2.common import ChannelPublisher, ChannelSubscriber
+import time, math
+
+# ── Inicjalizacja ──────────────────────────────────────────
+ChannelFactory.Initialize(0, "eth0")  # 0 = domyślny DDS domain
+
+current_state = None
+
+def on_low_state(msg: LowState):
+    global current_state
+    current_state = msg
+
+sub = ChannelSubscriber("rt/lowstate", LowState)
+sub.InitSubscriber(on_low_state)
+
+pub = ChannelPublisher("rt/lowcmd", LowCmd)
+pub.InitPublisher()
+
+# ── Czekaj na pierwszy stan ────────────────────────────────
+while current_state is None:
+    time.sleep(0.01)
+
+# ── Parametry kontrolera PD ────────────────────────────────
+TARGET_JOINT = 4   # Indeks: prawe kolano w G1
+Kp = 80.0          # Sztywność pozycyjna [Nm/rad]
+Kd = 2.0           # Tłumienie [Nm·s/rad]
+TARGET_POS = -0.6  # Cel: -0.6 rad (~34°)
+
+# ── Pętla sterowania 500 Hz ────────────────────────────────
+FREQ = 500
+dt = 1.0 / FREQ
+
+for step in range(FREQ * 3):  # 3 sekundy
+    cmd = LowCmd()
+
+    # Kopiuj reszty stawów ze stanu (tryb damping)
+    for i in range(len(cmd.motor_cmd)):
+        cmd.motor_cmd[i].mode = 0x01
+        cmd.motor_cmd[i].q   = current_state.motor_state[i].q
+        cmd.motor_cmd[i].kp  = 0.0
+        cmd.motor_cmd[i].kd  = 2.0
+        cmd.motor_cmd[i].tau = 0.0
+
+    # Cel dla stawu kolanowego
+    cmd.motor_cmd[TARGET_JOINT].q   = TARGET_POS
+    cmd.motor_cmd[TARGET_JOINT].kp  = Kp
+    cmd.motor_cmd[TARGET_JOINT].kd  = Kd
+    cmd.motor_cmd[TARGET_JOINT].tau = 0.0
+
+    pub.Write(cmd)
+    time.sleep(dt)
+
+print("Gotowe – powrót do trybu damping.")</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">12. Odczyt pełnego stanu robota (Python SDK2)</h3>
+                            <p class="text-stone-600 mb-3">Subskrybent zbierający pozycje wszystkich stawów, dane IMU i styki stóp jednocześnie.</p>
+                            <div class="code-block">
+                                <pre><code">from unitree_sdk2.common import ChannelFactory, ChannelSubscriber
+from unitree_sdk2.idl.default import unitree_go_msg_dds__SportModeState_
+import time, numpy as np
+
+ChannelFactory.Initialize(0, "eth0")
+
+def on_state_msg(msg):
+    # Pozycje stawów jako numpy array
+    q = np.array(msg.motor_state[i].q for i in range(23)])
+    # Dane IMU
+    rpy  = msg.imu_state.rpy      # [roll, pitch, yaw] w radianach
+    gyro = msg.imu_state.gyroscope # prędkości kątowe [rad/s]
+    acc  = msg.imu_state.accelerometer  # przyspieszenia [m/s²]
+    # Kontakt stóp (bool)
+    foot_contact = msg.foot_force  # siły nacisku [N]
+
+    print(f"RPY: {np.degrees(rpy).round(2)} deg")
+    print(f"Kontakt stóp: {foot_contact}")
+    print(f"Pierwszych 6 kątów: {q[:6].round(4)} rad")
+
+sub = ChannelSubscriber("rt/sportmodestate",
+                         unitree_go_msg_dds__SportModeState_)
+sub.InitSubscriber(on_state_msg)
+
+print("Nasłuchiwanie stanu G1... (Ctrl+C aby zakończyć)")
+while True:
+    time.sleep(1)</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="info-box p-5 rounded-xl">
+                            <h4 class="font-bold text-green-800">✅ Kiedy używać ROS 2, a kiedy SDK2?</h4>
+                            <p class="text-sm text-green-700 leading-relaxed">
+                                Używaj <strong>ROS 2</strong> gdy potrzebujesz integracji z nav2, MoveIt, rviz2 lub piszesz modułowy system wielu węzłów. Używaj <strong>SDK2</strong> bezpośrednio gdy piszesz własny kontroler low-level, trenujesz polityki RL wymagające pętli 500Hz+, lub gdy latencja ROS 2 bridge jest nieakceptowalna dla Twojej aplikacji.
+                            </p>
+                        </div>
+
+                    </div>
+                `
+            },
+
+            /* ─────────────────────────────────────────────────────────
+               MODUŁ 3: VISION AI & PERCEPTION
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'ai',
+                title: 'Vision AI & Perception',
+                icon: '👁️',
+                links: [{name: 'MediaPipe', url: 'https://ai.google.dev/edge/mediapipe/solutions/guide?hl=pl'}],
+                description: 'Integracja kamer G1 z modelami MediaPipe i DeepFace dla rozpoznawania osób i gestów.',
+                details: `
+                    <div class="space-y-6 step-content">
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Przygotowanie środowiska wizyjnego</h3>
+                            <p class="text-stone-600">Implementacja zaawansowanej inteligencji: rozpoznawanie twarzy, analiza gestów i uczenie przez wzmacnianie.</p>
+                        </section>
+
+                        <div class="pro-tip p-5 rounded-xl">
+                            <h4 class="font-bold text-blue-800">Redukcja Latencji</h4>
+                            <p class="text-sm text-blue-700">Użyj bufora kołowego (circular buffer) dla klatek wideo. Przetwarzaj tylko najnowszą klatkę, odrzucając te, które „utknęły" w kolejce procesora obrazu.</p>
+                        </div>
+
+                        <div class="code-block">
+                            <pre><code># Aktywuj swoje środowisko
+source ~/g1_env/bin/activate
+
+# Instalacja MediaPipe i DeepFace
+pip install tensorflow deepface mediapipe opencv-python tf-keras
+
+# Opcjonalnie dla akceleracji GPU
+pip install "tensorflow[and-cuda]"
+
+# Test kamery
+python3 -c "import cv2; cap=cv2.VideoCapture(0); print(cap.isOpened())"</code></pre>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-white border rounded-xl shadow-sm">
+                                <h4 class="font-bold text-amber-600 uppercase text-xs mb-2">DeepFace</h4>
+                                <p class="text-xs text-stone-500">Analiza emocji, wieku i identyfikacja osób w czasie rzeczywistym z kamer robota.</p>
+                            </div>
+                            <div class="p-4 bg-white border rounded-xl shadow-sm">
+                                <h4 class="font-bold text-amber-600 uppercase text-xs mb-2">MediaPipe</h4>
+                                <p class="text-xs text-stone-500">Śledzenie dłoni i ciała (pose estimation) do sterowania gestami.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-2xl">
+                            <h4 class="font-bold text-blue-900 mb-2">Zastosowania w G1 EDU</h4>
+                            <ul class="text-sm text-blue-800 space-y-2 list-disc ml-4">
+                                <li><strong>Teleoperacja:</strong> Mapowanie kątów stawów człowieka z MediaPipe na serwa G1.</li>
+                                <li><strong>Interakcja społeczna:</strong> DeepFace rozpoznaje tożsamość i nastrój użytkownika.</li>
+                                <li><strong>Śledzenie dłoni:</strong> Sterowanie chwytakami G1 za pomocą gestów (hand-tracking control).</li>
+                            </ul>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Śledzenie gestów (MediaPipe)</h3>
+                            <p class="text-stone-600 text-sm mb-4">Wykorzystując MediaPipe, otrzymujemy 33 punkty charakterystyczne ciała. Poniższy skrypt wyodrębnia współrzędne nadgarstka do wysłania jako cel dla ramienia G1.</p>
+                            <div class="code-block">
+                                <pre><code>import cv2
+import mediapipe as mp
+
+mp_pose = mp.solutions.pose
+pose = mp_pose.Pose()
+
+cap = cv2.VideoCapture(0)
+while cap.isOpened():
+    success, image = cap.read()
+    results = pose.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+
+    if results.pose_landmarks:
+        wrist_y = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_WRIST].y
+        print(f"Pozycja nadgarstka: {wrist_y}")
+        # TUTAJ: Wyślij wrist_y jako cel dla ramienia robota G1
+
+    cv2.imshow('G1 Vision Debug', image)
+    if cv2.waitKey(5) & 0xFF == 27: break</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Rozpoznawanie twarzy (DeepFace)</h3>
+                            <div class="code-block">
+                                <pre><code>from deepface import DeepFace
+
+def analyze_user(frame):
+    objs = DeepFace.analyze(frame, actions=['emotion', 'age'], enforce_detection=False)
+    for obj in objs:
+        print(f"Użytkownik ma ok. {obj['age']} lat i jest {obj['dominant_emotion']}")
+        # G1 może np. pomachać, gdy wykryje uśmiech (happy)</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="bg-stone-100 p-4 rounded-xl text-sm">
+                            <strong>Tip:</strong> Zawsze używaj <code>virtualenv</code> (np. Conda), aby uniknąć konfliktów między TensorFlow a bibliotekami systemowymi ROS2.
+                        </div>
+                    </div>
+                `
+            },
+
+            /* ─────────────────────────────────────────────────────────
+               MODUŁ 4: LeRobot & Imitation Learning
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'lerobot',
+                title: 'LeRobot & Imitation Learning',
+                icon: '🧠',
+                links: [
+                    {name: 'Hugging Face LeRobot', url: 'https://huggingface.co/lerobot'},
+                    {name: 'GitHub LeRobot', url: 'https://github.com/huggingface/lerobot'}
+                ],
+                description: 'Framework Hugging Face do uczenia przez naśladowanie – zbieranie danych z teleoperacji, trening polityk ACT / Diffusion Policy i deployment na Unitree G1.',
+                details: `
+                    <div class="space-y-6 step-content">
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Zamiast ręcznie programować trajektorie w MoveIt, możemy „pokazać" robotowi Unitree G1, jak ma wykonać zadanie. <strong>LeRobot</strong> to framework od Hugging Face, który demokratyzuje dostęp do <strong>Imitation Learning (IL)</strong>, pozwalając na zbieranie danych z teleoperacji i trenowanie modeli AI typu <em>end-to-end</em>.
+                        </p>
+
+                        <!-- Kluczowe metody -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="p-5 rounded-2xl border-l-4 border-amber-400 bg-amber-50">
+                                <span class="inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-wide mb-3">ACT</span>
+                                <h4 class="font-bold text-base mb-1">Action Chunking Transformer</h4>
+                                <p class="text-sm text-stone-500">Zaawansowany algorytm IL, który przewiduje całe „pakiety" akcji, redukując błędy kumulatywne i zapewniając płynność ruchu G1.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl border-l-4 border-blue-400 bg-blue-50">
+                                <span class="inline-block px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-black uppercase tracking-wide mb-3">Diffusion Policy</span>
+                                <h4 class="font-bold text-base mb-1">Polityki Dyfuzyjne</h4>
+                                <p class="text-sm text-stone-500">Wykorzystuje modele probabilistyczne (podobnie jak Stable Diffusion) do generowania precyzyjnych i stabilnych trajektorii ramion robota.</p>
+                            </div>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 1: Instalacja -->
+                        <div class="section-label">📦 Krok 1 — Instalacja</div>
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Instalacja LeRobot</h3>
+                            <p class="text-stone-600 mb-3">Biblioteka wymaga Pythona 3.10+ oraz wsparcia dla akceleracji GPU (CUDA).</p>
+                            <div class="code-block">
+                                <pre><code>git clone https://github.com/huggingface/lerobot.git
+cd lerobot
+pip install -e .
+
+# Instalacja zależności GPU dla Unitree G1
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install opencv-python pynput</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 2: Zbieranie danych -->
+                        <div class="section-label">🎥 Krok 2 — Zbieranie Danych</div>
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Struktura Datasetu G1</h3>
+                            <p class="text-stone-600 mb-4">Proces polega na nagrywaniu pary: <strong>Obraz z kamery robota</strong> + <strong>Kąty silników</strong> (state) wysyłane przez człowieka podczas teleoperacji.</p>
+                            <div class="bg-stone-50 border border-stone-200 rounded-2xl p-5 mb-4">
+                                <h4 class="font-bold mb-3 text-stone-700 text-sm">Pola datasetu:</h4>
+                                <ul class="space-y-3 text-sm text-stone-600">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 font-bold">▸</span>
+                                        <span><code class="bg-stone-100 px-1 rounded">observation.image</code> – Obraz z kamery na głowie G1 (3×224×224).</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 font-bold">▸</span>
+                                        <span><code class="bg-stone-100 px-1 rounded">observation.state</code> – Wektor pozycji 23+ stawów robota.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 font-bold">▸</span>
+                                        <span><code class="bg-stone-100 px-1 rounded">action</code> – Pozycje stawów w następnej klatce (target dla sieci).</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="code-block">
+                                <pre><code># Nagrywanie epizodu teleoperacji
+python lerobot/scripts/record.py \
+    --robot-path unitree_g1 \
+    --fps 30 \
+    --repo-id $USER/g1-cleaning-task</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 3: Trening -->
+                        <div class="section-label">🔬 Krok 3 — Trening Polityki AI</div>
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Trening z architekturą ACT</h3>
+                            <p class="text-stone-600 mb-3">Uruchomienie treningu z wykorzystaniem architektury ACT dla Twojego datasetu G1:</p>
+                            <div class="code-block">
+                                <pre><code>python lerobot/scripts/train.py \
+    policy=act \
+    dataset=unitree_g1_pick_place \
+    hydra.run.dir=outputs/train/g1_act_v1 \
+    device=cuda \
+    wandb.enable=true</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 4: Deployment -->
+                        <div class="section-label">🚀 Krok 4 — Deployment na G1</div>
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Inferencja w czasie rzeczywistym</h3>
+                            <p class="text-stone-600 mb-3">Po wytrenowaniu modelu, polityka steruje robotem w czasie rzeczywistym, „widząc" świat przez kamerę.</p>
+                            <div class="code-block">
+                                <pre><code>import lerobot
+from unitree_sdk2.python import RobotInterface
+
+# Wczytaj wytrenowaną politykę
+policy = lerobot.Policy.from_pretrained("outputs/train/g1_act_v1/checkpoints/last")
+
+# Pętla sterowania
+while True:
+    obs = robot.get_observations()  # Obraz + Stan
+    action = policy.predict(obs)    # Inferencja AI
+    robot.set_joint_targets(action) # Ruch silników</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- Baner podsumowujący -->
+                        <div class="p-7 rounded-3xl text-white shadow-xl" style="background: linear-gradient(135deg, #f59e0b, #f97316);">
+                            <h3 class="text-xl font-black mb-2">Sim2Real &amp; Real2Real</h3>
+                            <p class="opacity-90 text-sm leading-relaxed mb-4">
+                                LeRobot pozwala nie tylko na zbieranie danych z fizycznego robota (Real2Real), ale również na importowanie danych z symulacji <strong>Isaac Sim</strong> (Sim2Real), co drastycznie przyspiesza proces nauki chwytania skomplikowanych obiektów.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-white/20 rounded text-[10px] font-black uppercase">End-to-End Learning</span>
+                                <span class="px-3 py-1 bg-white/20 rounded text-[10px] font-black uppercase">Hugging Face Hub Integration</span>
+                                <span class="px-3 py-1 bg-white/20 rounded text-[10px] font-black uppercase">ACT / Diffusion Policy</span>
+                            </div>
+                        </div>
+
+                    </div>
+                `
+            },
+
+            /* ─────────────────────────────────────────────────────────
+               MODUŁ 5: MoveIt 2
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'moveit',
+                title: 'MoveIt 2',
+                icon: '📐',
+                links: [
+                    {name: 'MoveIt 2 Docs', url: 'https://moveit.picknik.ai/main/index.html'},
+                    {name: 'MoveIt Setup Assistant', url: 'https://moveit.picknik.ai/main/doc/examples/setup_assistant/setup_assistant_tutorial.html'}
+                ],
+                description: 'Najpopularniejszy framework ROS 2 do planowania ruchu, kinematyki odwrotnej i unikania kolizji – zintegrowany z ramionami i dłońmi Unitree G1.',
+                details: `
+                    <div class="space-y-6 step-content">
+
+                        <!-- Intro -->
+                        <p class="text-stone-600 leading-relaxed">
+                            MoveIt 2 to najpopularniejszy framework w systemie <strong>ROS 2 Humble</strong> służący do planowania ruchu, manipulacji oraz unikania kolizji. W przypadku Unitree G1 zarządza kinematyką odwrotną (IK) dla ramion oraz dłoni, pozwalając na precyzyjne operowanie chwytakami bez ręcznego obliczania kątów stawów.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="p-5 rounded-2xl border-l-4 border-blue-500 bg-white shadow-sm">
+                                <h4 class="font-bold text-blue-900 mb-1">Planowanie Trajektorii</h4>
+                                <p class="text-sm text-stone-500">Generowanie płynnych ścieżek od punktu A do B z uwzględnieniem ograniczeń prędkości i przyspieszenia silników Unitree.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl border-l-4 border-emerald-500 bg-white shadow-sm">
+                                <h4 class="font-bold text-green-900 mb-1">Unikanie Kolizji</h4>
+                                <p class="text-sm text-stone-500">Robot „widzi" własne ciało i otoczenie (poprzez chmurę punktów), dzięki czemu nie uderzy ramieniem w korpus ani przeszkody.</p>
+                            </div>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 1: Instalacja -->
+                        <div class="section-label">📦 Krok 1 — Instalacja</div>
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Przygotowanie środowiska</h3>
+                            <p class="text-stone-600 mb-3">Zakładamy, że posiadasz zainstalowany system <strong>ROS 2 Humble</strong> na Ubuntu 22.04.</p>
+                            <div class="code-block">
+                                <pre><code># Instalacja MoveIt 2 i narzędzi wizualizacji
+sudo apt update
+sudo apt install ros-humble-moveit -y
+sudo apt install ros-humble-moveit-visual-tools ros-humble-moveit-resources -y
+
+# Instalacja kontrolerów ROS 2 Control
+sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers -y</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 2: Konfiguracja -->
+                        <div class="section-label">⚙️ Krok 2 — MoveIt Setup Assistant</div>
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Generowanie pakietu konfiguracyjnego G1</h3>
+                            <p class="text-stone-600 mb-4">Aby skonfigurować G1, generujemy pakiet <code>moveit_config</code> na podstawie pliku URDF robota.</p>
+                            <div class="space-y-3">
+                                <div class="flex gap-4 p-4 bg-white border border-stone-100 rounded-xl shadow-sm">
+                                    <div class="font-black text-blue-600 text-lg w-8 shrink-0">01</div>
+                                    <div>
+                                        <p class="font-bold text-sm mb-1">Uruchomienie asystenta</p>
+                                        <code class="text-xs bg-stone-100 px-2 py-0.5 rounded">ros2 launch moveit_setup_assistant setup_assistant.launch.py</code>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 p-4 bg-white border border-stone-100 rounded-xl shadow-sm">
+                                    <div class="font-black text-blue-600 text-lg w-8 shrink-0">02</div>
+                                    <div>
+                                        <p class="font-bold text-sm mb-1">Self-Collision Matrix</p>
+                                        <p class="text-xs text-stone-500">Wygeneruj macierz kolizji, aby wykluczyć stawy, które zawsze się dotykają (np. sąsiadujące silniki).</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 p-4 bg-white border border-stone-100 rounded-xl shadow-sm">
+                                    <div class="font-black text-blue-600 text-lg w-8 shrink-0">03</div>
+                                    <div>
+                                        <p class="font-bold text-sm mb-1">Planning Groups</p>
+                                        <p class="text-xs text-stone-500">Zdefiniuj grupy: <em>left_arm</em>, <em>right_arm</em> oraz <em>waist</em>. Wybierz solver <strong>KDL Kinematics</strong> (lub BioIK dla lepszych wyników z humanoidem).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="critical-warn p-5 rounded-xl">
+                            <h4 class="font-bold text-red-800">Macierz Kolizji – Virtual Joints</h4>
+                            <p class="text-sm text-red-700">W pliku <code>.srdf</code> musisz zdefiniować „Virtual Joints" dla torsu robota, aby MoveIt nie traktował bazy G1 jako przeszkody zewnętrznej. Dla G1 zaleca się solver <strong>BioIK</strong> lub <strong>TRAC-IK</strong> zamiast standardowego KDL.</p>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 3: API -->
+                        <div class="section-label">💻 Krok 3 — MoveGroup API</div>
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Sterowanie ramieniem w przestrzeni kartezjańskiej (C++)</h3>
+                            <p class="text-stone-600 mb-3">Przykład skryptu, który przesuwa ramię G1 do określonej pozy:</p>
+                            <div class="code-block">
+                                <pre><code>#include &lt;moveit/move_group_interface/move_group_interface.h&gt;
+
+auto move_group_interface = moveit::planning_interface::MoveGroupInterface(node, "right_arm");
+
+// Ustawienie docelowej pozycji (x, y, z) i orientacji (quaternion)
+geometry_msgs::msg::Pose target_pose;
+target_pose.orientation.w = 1.0;
+target_pose.position.x = 0.3;
+target_pose.position.y = -0.2;
+target_pose.position.z = 0.5;
+
+move_group_interface.setPoseTarget(target_pose);
+
+// Planowanie i wykonanie ruchu
+moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+bool success = (move_group_interface.plan(my_plan) ==
+                moveit::core::MoveItErrorCode::SUCCESS);
+
+if (success) {
+    move_group_interface.execute(my_plan);
+}</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 4: MoveIt Servo -->
+                        <div class="section-label">⚡ Krok 4 — Sterowanie Real-Time</div>
+                        <div class="p-7 bg-blue-600 rounded-3xl text-white shadow-2xl">
+                            <h3 class="text-xl font-black mb-3">MoveIt Servo: Ruch w Czasie Rzeczywistym</h3>
+                            <p class="opacity-90 text-sm leading-relaxed mb-4">
+                                Standardowe planowanie trajektorii może być zbyt wolne dla zadań takich jak śledzenie celu kamerą. <strong>MoveIt Servo</strong> pozwala na przesyłanie strumieniowe komend prędkości bezpośrednio do manipulatorów (tzw. „Jogging"), co umożliwia ultra-płynne sterowanie joystickiem lub AI.
+                            </p>
+                            <div class="flex gap-3 flex-wrap">
+                                <span class="px-4 py-1.5 bg-blue-700 rounded-lg text-[10px] font-black uppercase">Low Latency</span>
+                                <span class="px-4 py-1.5 bg-blue-700 rounded-lg text-[10px] font-black uppercase">Reactive Control</span>
+                                <span class="px-4 py-1.5 bg-blue-700 rounded-lg text-[10px] font-black uppercase">Joystick / AI Input</span>
+                            </div>
+                        </div>
+
+                    </div>
+                `
+            },
+
+            /* ─────────────────────────────────────────────────────────
+               MODUŁ 6: NVIDIA Omniverse → Isaac Sim → Isaac Lab
+               (połączenie: Omniverse + Isaac Sim + Isaac Lab)
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'nvidia_stack',
+                title: 'Stos NVIDIA: Sim & RL',
+                icon: '🟢',
+                links: [
+                    {name: 'NVIDIA Omniverse', url: 'https://developer.nvidia.com/omniverse'},
+                    {name: 'Isaac Sim Setup', url: 'https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/index.html'},
+                    {name: 'Isaac Lab GitHub', url: 'https://github.com/isaac-sim/IsaacLab'}
+                ],
+                description: 'Kompletny ekosystem NVIDIA dla symulacji i uczenia robotów – od platformy Omniverse, przez fotorealistyczny Isaac Sim, po masowe trenowanie RL w Isaac Lab.',
+                details: `
+                    <div class="space-y-6 step-content">
+
+                        <!-- CZĘŚĆ 1: Omniverse -->
+                        <div class="nvidia-badge">NVIDIA Omniverse</div>
+                        <h3 class="text-xl font-bold mb-2">Co to jest Omniverse?</h3>
+                        <p class="text-stone-600 mb-4 text-sm leading-relaxed">
+                            To nie jest zwykły silnik graficzny – to system operacyjny dla grafiki 3D oparty na formacie <strong>OpenUSD</strong> (Universal Scene Description). Pozwala łączyć narzędzia (Blender, Maya, CAD) w jednym czasie rzeczywistym i zarządzać wersjami Isaac Sim przez centralny launcher.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
+                                <span class="block font-black text-[#76b900] text-lg">Nucleus</span>
+                                <span class="text-[11px] text-stone-500">Serwer bazy danych do współpracy live.</span>
+                            </div>
+                            <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
+                                <span class="block font-black text-[#76b900] text-lg">Connectors</span>
+                                <span class="text-[11px] text-stone-500">Wtyczki do zewnętrznych aplikacji 3D.</span>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">1. Instalacja Omniverse Launcher</h3>
+                            <div class="code-block">
+                                <pre><code>1. Wejdź na: nvidia.com/omniverse
+2. Pobierz "Workstation Launcher"
+3. Zainstaluj "Cache" oraz "Nucleus Navigator" w zakładce Settings
+4. Z Launchera zainstaluj "Isaac Sim" (zalecana wersja 2023.x+)</code></pre>
+                            </div>
+                        </section>
+
+                        <hr class="section-divider">
+
+                        <!-- CZĘŚĆ 2: Isaac Sim -->
+                        <div class="nvidia-badge">NVIDIA Isaac Sim</div>
+                        <h3 class="text-xl font-bold mb-2">Symulacja fizyczna klasy przemysłowej</h3>
+                        <p class="text-stone-600 mb-4 text-sm">
+                            Wykorzystuje <strong>PhysX 5</strong> do symulacji fizyki i RTX do generowania fotorealistycznych danych z sensorów (LIDAR, kamery głębi). Dla G1 EDU to kluczowe środowisko do testowania URDF i sensorów.
+                        </p>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">2. Integracja G1 z Isaac Sim</h3>
+                            <p class="text-stone-600 mb-3">Aby robot pojawił się w symulacji, zaimportuj jego model URDF i skonfiguruj mostek ROS 2.</p>
+                            <div class="code-block">
+                                <pre><code># Wewnątrz Isaac Sim:
+1. Window -> Extensions -> Włącz "omni.isaac.ros2_bridge"
+2. Tools -> Robotics -> URDF Importer
+3. Wskaż plik G1.urdf z Unitree SDK
+
+# Ważne: Zaznacz "Fix Base Link" dla testów manipulacji
+# lub odznacz dla testów chodu.
+
+# Instalacja Isaac ROS (host Ubuntu):
+sudo apt install ros-humble-moveit -y
+sudo apt install ros-humble-isaac-ros-common -y</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="p-5 bg-amber-50 rounded-2xl border-l-4 border-amber-400 mb-4">
+                            <h4 class="font-black text-amber-900 text-sm mb-1">PRO TIP: SYNTETYCZNE DANE</h4>
+                            <p class="text-xs text-amber-800">Użyj narzędzia <strong>Replicator</strong> w Isaac Sim, aby wygenerować tysiące zdjęć z etykietami do trenowania sieci neuronowych rozpoznających obiekty dla Twojego G1.</p>
+                        </div>
+
+                        <div class="info-box p-5 rounded-xl">
+                            <h4 class="font-bold text-green-800">ROS 2 Bridge</h4>
+                            <p class="text-sm text-green-700">Włącz rozszerzenie <code>omni.isaac.ros2_bridge</code>, aby tematy ROS 2 z Twojego komputera sterowały robotem wewnątrz symulacji.</p>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- CZĘŚĆ 3: Isaac Lab -->
+                        <div class="nvidia-badge">NVIDIA Isaac Lab</div>
+                        <h3 class="text-xl font-bold mb-2">Masowe Reinforcement Learning (dawny Orbit)</h3>
+                        <p class="text-stone-600 mb-4 text-sm">
+                            <strong>Isaac Lab</strong> to najwyższa warstwa stosu NVIDIA. Służy do trenowania polityk chodu (locomotion) dla humanoidów G1 przy użyciu tysięcy równoległych instancji robota na jednej karcie GPU.
+                        </p>
+
+                        <section class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                            <div class="p-4 bg-stone-900 text-white rounded-xl">
+                                <span class="text-[#76b900] font-black text-xs uppercase block mb-1">Parallelism</span>
+                                <p class="text-[10px] opacity-70">Symuluj 4096 robotów naraz na jednej karcie RTX 4090.</p>
+                            </div>
+                            <div class="p-4 bg-stone-900 text-white rounded-xl">
+                                <span class="text-[#76b900] font-black text-xs uppercase block mb-1">GPU Pipeline</span>
+                                <p class="text-[10px] opacity-70">Dane z sensorów nie opuszczają pamięci VRAM – brak wąskiego gardła CPU.</p>
+                            </div>
+                            <div class="p-4 bg-stone-900 text-white rounded-xl">
+                                <span class="text-[#76b900] font-black text-xs uppercase block mb-1">PPO / RSL_RL</span>
+                                <p class="text-[10px] opacity-70">Wbudowane algorytmy do nauki chodu humanoida.</p>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">3. Instalacja Isaac Lab</h3>
+                            <div class="code-block">
+                                <pre><code># Sklonuj repozytorium Isaac Lab
+git clone https://github.com/isaac-sim/IsaacLab.git
+cd IsaacLab
+
+# Skonfiguruj środowisko (wymaga zainstalowanego Isaac Sim)
+./isaaclab.sh --install
+
+# Uruchom test środowiska (G1 locomotion policy)
+./isaaclab.sh -p scripts/reinforcement_learning/play.py --task Isaac-Velocity-G1-v0</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="p-8 bg-black rounded-3xl text-center mt-4">
+                            <h3 class="text-2xl font-black text-white mb-4">Gotowy na Sim-to-Real?</h3>
+                            <p class="text-stone-400 text-sm mb-6 leading-relaxed">
+                                Po wytrenowaniu polityki w Isaac Lab, wyeksportuj model <code>.pt</code> (PyTorch) i wgraj go na komputer pokładowy G1 EDU przy użyciu Unitree SDK2.
+                            </p>
+                            <div class="flex justify-center gap-4">
+                                <a href="https://docs.isaacsim.omniverse.nvidia.com/" target="_blank" class="px-6 py-2 border border-[#76b900] text-[#76b900] rounded-full text-xs font-black uppercase hover:bg-[#76b900] hover:text-black transition-all">Sim2Real Docs ↗</a>
+                                <a href="https://github.com/unitreerobotics/unitree_sdk2" target="_blank" class="px-6 py-2 bg-[#76b900] text-black rounded-full text-xs font-black uppercase hover:bg-green-400 transition-all">Pobierz G1 Asset ↗</a>
+                            </div>
+                        </div>
+
+                    </div>
+                `
+            },
+
+            /* ─────────────────────────────────────────────────────────
+               MODUŁ 7: Wymagania sprzętowe i Deploy
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'hardware',
+                title: 'Wymagania i Deploy',
+                icon: '🖥️',
+                links: [{name: 'Isaac Sim Docs', url: 'https://docs.isaacsim.omniverse.nvidia.com/'}],
+                description: 'Zasoby sprzętowe potrzebne do uruchomienia pełnego stosu NVIDIA i wdrożenia modeli na robot.',
+                details: `
+                    <div class="space-y-6 step-content">
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="border-b-2 border-stone-200">
+                                    <th class="text-left py-3 font-black">Komponent</th>
+                                    <th class="text-left py-3 font-black">Minimum</th>
+                                    <th class="text-left py-3 font-black">Zalecane (G1 Dev)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-stone-100">
+                                    <td class="py-3 font-bold">GPU</td>
+                                    <td class="py-3">RTX 3070 (8 GB)</td>
+                                    <td class="py-3 text-[#76b900] font-bold">RTX 4090 (24 GB)</td>
+                                </tr>
+                                <tr class="border-b border-stone-100">
+                                    <td class="py-3 font-bold">System</td>
+                                    <td class="py-3">Ubuntu 20.04</td>
+                                    <td class="py-3">Ubuntu 22.04 LTS</td>
+                                </tr>
+                                <tr class="border-b border-stone-100">
+                                    <td class="py-3 font-bold">Sterowniki NVIDIA</td>
+                                    <td class="py-3">525.x</td>
+                                    <td class="py-3">535.x lub nowsze</td>
+                                </tr>
+                                <tr class="border-b border-stone-100">
+                                    <td class="py-3 font-bold">RAM</td>
+                                    <td class="py-3">32 GB</td>
+                                    <td class="py-3">64 GB DDR5</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-bold">Dysk</td>
+                                    <td class="py-3">SSD 500 GB</td>
+                                    <td class="py-3">NVMe 2 TB</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="p-6 bg-amber-600 rounded-2xl text-white shadow-xl mt-4">
+                            <h4 class="font-bold mb-2">Wszystko gotowe!</h4>
+                            <p class="text-sm opacity-90">Pełny stos jest skonfigurowany. Możesz uruchomić skrypt testowy:</p>
+                            <code class="block mt-4 bg-amber-900/50 p-2 rounded text-xs">python3 ~/unitree_sdk2/example/helloworld.py</code>
+                        </div>
+                    </div>
+                `
+            },
+
+            /* ═══════════════════════════════════════════════════════════
+               MODUŁ 8: AUTONOMICZNA MISJA — Nawigacja, Manipulacja,
+               Detekcja Człowieka, Gesty i Mowa
+            ═══════════════════════════════════════════════════════════ */
+            {
+                id: 'autonomous_mission',
+                title: 'Autonomiczna Misja G1',
+                icon: '🧭',
+                links: [
+                    {name: 'Nav2 Docs', url: 'https://docs.nav2.org/'},
+                    {name: 'slam_toolbox', url: 'https://github.com/SteveMacenski/slam_toolbox'},
+                    {name: 'YOLOv8', url: 'https://docs.ultralytics.com/'},
+                    {name: 'Coqui TTS', url: 'https://github.com/coqui-ai/TTS'}
+                ],
+                description: 'Kompletny stos narzędzi do realizacji misji autonomicznej: nawigacja SLAM, planowanie chwytów, detekcja człowieka, synteza mowy i komunikacja przez gesty.',
+                details: `
+                    <div class="space-y-6 step-content">
+
+                        <!-- ─── WIZJA MISJI ─────────────────────────────────────── -->
+                        <div class="bg-stone-950 rounded-2xl p-7 text-white">
+                            <p class="text-amber-400 text-[10px] font-black uppercase tracking-widest mb-3">Scenariusz misji</p>
+                            <h3 class="text-2xl font-black mb-4 leading-tight">G1 wchodzi do pokoju, zbiera elementy,<br>wita człowieka i składa mu raport.</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-5">
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-2xl mb-1">🗺️</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">1. Nawigacja</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">SLAM + Nav2</p>
+                                </div>
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-2xl mb-1">📦</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">2. Detekcja</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">YOLOv8 + PCL</p>
+                                </div>
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-2xl mb-1">🦾</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">3. Chwyt</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">MoveIt + GraspNet</p>
+                                </div>
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-2xl mb-1">👤</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">4. Człowiek</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">DeepFace + MP</p>
+                                </div>
+                                <div class="p-3 bg-stone-800 rounded-xl text-center">
+                                    <div class="text-2xl mb-1">👋</div>
+                                    <p class="text-[9px] font-bold uppercase text-stone-400">5. Powitanie</p>
+                                    <p class="text-[9px] text-stone-500 mt-0.5">TTS + Gesty</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ─── ETAP 1: NAWIGACJA ──────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">🗺️ Etap 1 — Autonomiczna Nawigacja (SLAM + Nav2)</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Zanim G1 zacznie cokolwiek robić, musi wiedzieć, gdzie jest i jak się poruszać bezpiecznie. Używamy dwóch warstw: <strong>SLAM</strong> (jednoczesne mapowanie i lokalizacja) buduje mapę pomieszczenia, a <strong>Nav2</strong> planuje i wykonuje trasy z unikaniem przeszkód.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="p-5 rounded-2xl border border-stone-100 bg-white shadow-sm">
+                                <span class="block font-black text-sm text-stone-800 mb-1">slam_toolbox</span>
+                                <p class="text-xs text-stone-500 leading-relaxed">Buduje mapę 2D z danych LiDAR lub symulowanego skanu z kamery głębi (D435i). Pracuje online (podczas ruchu) lub offline (z bagfile). Persystuje mapę między sesjami.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl border border-stone-100 bg-white shadow-sm">
+                                <span class="block font-black text-sm text-stone-800 mb-1">Nav2 (Navigation2)</span>
+                                <p class="text-xs text-stone-500 leading-relaxed">Planuje globalne i lokalne trasy, zarządza costmapami, realizuje akcje „przejdź do punktu XY" i „obróć się do kąta Z". Obsługuje recovery behaviors gdy robot utknie.</p>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Instalacja stosu nawigacyjnego</h3>
+                            <div class="code-block">
+                                <pre><code># Nav2 + SLAM Toolbox + lokalizacja AMCL
+sudo apt install ros-humble-nav2-bringup \
+                 ros-humble-slam-toolbox \
+                 ros-humble-nav2-map-server \
+                 ros-humble-navigation2 -y
+
+# Konwerter chmury punktów → scan (dla kamer głębi bez LiDARu)
+sudo apt install ros-humble-depthimage-to-laserscan -y</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Faza 1: Budowanie mapy (SLAM online)</h3>
+                            <div class="code-block">
+                                <pre><code># Terminal 1: Uruchom mostek ROS2 dla G1
+ros2 launch unitree_ros2 g1_bridge.launch.py interface:=eth0
+
+# Terminal 2: Uruchom SLAM Toolbox w trybie online
+ros2 launch slam_toolbox online_async_launch.py \
+    slam_params_file:=./config/slam_params.yaml \
+    use_sim_time:=false
+
+# Terminal 3: Teleoperacja do eksploracji pomieszczenia
+ros2 run teleop_twist_keyboard teleop_twist_keyboard \
+    --ros-args --remap /cmd_vel:=/cmd_vel
+
+# Terminal 4: Wizualizacja w RViz2
+ros2 launch nav2_bringup rviz_launch.py
+
+# Po eksploracji – zapisz mapę
+ros2 run nav2_map_server map_saver_cli -f ~/maps/room_map</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Faza 2: Autonomiczna nawigacja po mapie</h3>
+                            <div class="code-block">
+                                <pre><code># Plik: navigate_to_box.py
+import rclpy
+from rclpy.node import Node
+from rclpy.action import ActionClient
+from nav2_msgs.action import NavigateToPose
+from geometry_msgs.msg import PoseStamped
+import tf_transformations
+
+class G1Navigator(Node):
+    def __init__(self):
+        super().__init__('g1_navigator')
+        self._client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
+
+    def go_to(self, x: float, y: float, yaw_deg: float = 0.0):
+        goal = NavigateToPose.Goal()
+        pose = PoseStamped()
+        pose.header.frame_id = 'map'
+        pose.header.stamp = self.get_clock().now().to_msg()
+        pose.pose.position.x = x
+        pose.pose.position.y = y
+
+        # Konwersja kąta yaw → quaternion
+        q = tf_transformations.quaternion_from_euler(0, 0, yaw_deg * 3.14159 / 180)
+        pose.pose.orientation.z = q[2]
+        pose.pose.orientation.w = q[3]
+
+        goal.pose = pose
+        self.get_logger().info(f'Nawiguję do: x={x}, y={y}, yaw={yaw_deg}°')
+        self._client.wait_for_server()
+        future = self._client.send_goal_async(goal)
+        return future
+
+def main():
+    rclpy.init()
+    nav = G1Navigator()
+
+    # 1. Idź do lokalizacji pudełka
+    nav.go_to(x=2.5, y=1.0, yaw_deg=90.0)
+    rclpy.spin_once(nav, timeout_sec=30.0)
+
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <div class="pro-tip p-5 rounded-xl">
+                            <h4 class="font-bold text-blue-800">Costmapy i strefy zakazane</h4>
+                            <p class="text-sm text-blue-700">Nav2 używa dwóch costmap: <strong>globalnej</strong> (plan całej trasy na statycznej mapie) i <strong>lokalnej</strong> (unikanie dynamicznych przeszkód w czasie rzeczywistym, np. przechodzącej osoby). Skonfiguruj <code>inflation_radius</code> na co najmniej 0.35m dla humanoidów, aby nogi robota nie zachodziły na przeszkody.</p>
+                        </div>
+
+                        <!-- ─── ETAP 2: DETEKCJA OBIEKTÓW ─────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">📦 Etap 2 — Detekcja i Lokalizacja Obiektów (YOLOv8 + PCL)</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Aby chwyć pudełko, robot musi je najpierw <strong>wykryć</strong> na obrazie 2D (YOLOv8), a następnie ustalić jego dokładną <strong>pozycję 3D</strong> w przestrzeni za pomocą chmury punktów z kamery głębi (Intel RealSense D435i lub ZED2).
+                        </p>
+
+                        <div class="overflow-x-auto rounded-xl border border-stone-100 mb-4">
+                            <table class="w-full text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-stone-900 text-amber-400">
+                                        <th class="text-left px-4 py-3 font-black">Narzędzie</th>
+                                        <th class="text-left px-4 py-3 font-black">Zadanie</th>
+                                        <th class="text-left px-4 py-3 font-black">Wyjście</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-stone-100 bg-white">
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-mono font-bold text-blue-600">YOLOv8</td>
+                                        <td class="px-4 py-3 text-stone-600">Detekcja bounding box obiektu na obrazie RGB</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">bbox [x1,y1,x2,y2] + klasa + pewność</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-mono font-bold text-blue-600">RealSense D435i</td>
+                                        <td class="px-4 py-3 text-stone-600">Kamera głębi – surowa chmura punktów XYZ</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">sensor_msgs/PointCloud2</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-mono font-bold text-blue-600">PCL (Point Cloud Lib)</td>
+                                        <td class="px-4 py-3 text-stone-600">Wycinanie ROI, filtracja, centroid 3D obiektu</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">geometry_msgs/Point (x, y, z)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-mono font-bold text-blue-600">GraspNet / AnyGrasp</td>
+                                        <td class="px-4 py-3 text-stone-600">Przewidywanie optymalnej pozy chwytu z chmury punktów</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">6-DOF grasp pose [x,y,z,roll,pitch,yaw]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Instalacja i konfiguracja YOLOv8</h3>
+                            <div class="code-block">
+                                <pre><code># Instalacja Ultralytics YOLOv8
+pip install ultralytics opencv-python pyrealsense2
+
+# Instalacja ROS2 wrapper dla RealSense
+sudo apt install ros-humble-realsense2-camera -y
+
+# Uruchomienie kamery głębi
+ros2 launch realsense2_camera rs_launch.py \
+    enable_color:=true \
+    enable_depth:=true \
+    align_depth.enable:=true</code></pre>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Węzeł detekcji: YOLOv8 + centroid 3D z chmury punktów</h3>
+                            <div class="code-block">
+                                <pre><code">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image, PointCloud2
+from geometry_msgs.msg import PointStamped
+from cv_bridge import CvBridge
+import sensor_msgs_py.point_cloud2 as pc2
+from ultralytics import YOLO
+import numpy as np
+
+class BoxDetector(Node):
+    def __init__(self):
+        super().__init__('box_detector')
+        self.model = YOLO('yolov8m.pt')          # model medium
+        self.bridge = CvBridge()
+        self.latest_cloud = None
+
+        # Subskrybuj obraz RGB i chmurę punktów
+        self.create_subscription(Image,
+            '/camera/color/image_raw', self.img_cb, 10)
+        self.create_subscription(PointCloud2,
+            '/camera/depth/color/points', self.cloud_cb, 10)
+
+        # Publikuj wykrytą pozycję pudełka
+        self.pos_pub = self.create_publisher(
+            PointStamped, '/detected_box_position', 10)
+
+    def cloud_cb(self, msg):
+        self.latest_cloud = msg
+
+    def img_cb(self, msg):
+        if self.latest_cloud is None:
+            return
+
+        frame = self.bridge.imgmsg_to_cv2(msg, 'bgr8')
+        results = self.model(frame, classes=[73])  # 73 = 'box' w COCO
+
+        for det in results[0].boxes:
+            conf = float(det.conf)
+            if conf < 0.6:
+                continue
+
+            # Środek bounding boxa w pikselach
+            x1, y1, x2, y2 = map(int, det.xyxy[0])
+            cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
+
+            # Pobierz punkt 3D z chmury w miejscu (cx, cy)
+            # Iteruj po punktach z wycinka ROI
+            roi_points = []
+            for pt in pc2.read_points(self.latest_cloud,
+                                       field_names=('x','y','z'),
+                                       skip_nans=True,
+                                       uvs=[(cx, cy)]):
+                roi_points.append(pt)
+
+            if not roi_points:
+                continue
+
+            xyz = np.array(roi_points).mean(axis=0)
+
+            out = PointStamped()
+            out.header = self.latest_cloud.header
+            out.point.x, out.point.y, out.point.z = \
+                float(xyz[0]), float(xyz[1]), float(xyz[2])
+            self.pos_pub.publish(out)
+
+            self.get_logger().info(
+                f'Pudełko @ x={xyz[0]:.3f} y={xyz[1]:.3f} z={xyz[2]:.3f}m '
+                f'(pewność: {conf:.0%})')
+
+def main():
+    rclpy.init()
+    rclpy.spin(BoxDetector())
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- ─── ETAP 3: CHWYT ─────────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">🦾 Etap 3 — Planowanie i Wykonanie Chwytu</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Mając pozycję 3D pudełka, robot musi wygenerować optymalną pozę chwytu i wykonać ruch ramieniem bez kolizji. Pipeline łączy <strong>GraspNet</strong> (predykcja pozy) z <strong>MoveIt 2</strong> (planowanie trajektorii).
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div class="p-4 bg-stone-50 rounded-xl border border-stone-100 text-center">
+                                <div class="text-2xl mb-2">📍</div>
+                                <span class="text-xs font-black uppercase text-stone-700 block mb-1">Pre-grasp pose</span>
+                                <p class="text-[10px] text-stone-500">Ramię 15 cm nad obiektem, palce otwarte – bezpieczna pozycja wyjściowa przed chwytem.</p>
+                            </div>
+                            <div class="p-4 bg-stone-50 rounded-xl border border-stone-100 text-center">
+                                <div class="text-2xl mb-2">🫳</div>
+                                <span class="text-xs font-black uppercase text-stone-700 block mb-1">Grasp pose</span>
+                                <p class="text-[10px] text-stone-500">Ruch liniowy w dół (CartesianPath), zaciśnięcie chwytaka, weryfikacja siły dotyku.</p>
+                            </div>
+                            <div class="p-4 bg-stone-50 rounded-xl border border-stone-100 text-center">
+                                <div class="text-2xl mb-2">🏠</div>
+                                <span class="text-xs font-black uppercase text-stone-700 block mb-1">Retreat pose</span>
+                                <p class="text-[10px] text-stone-500">Uniesienie ramienia z obiektem, powrót do bezpiecznej pozycji transportowej.</p>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Pipeline chwytu: MoveIt 2 (Python)</h3>
+                            <div class="code-block">
+                                <pre><code">#!/usr/bin/env python3
+# Skrypt wykonuje sekwencję: pre-grasp → grasp → retreat
+import rclpy
+from rclpy.node import Node
+from moveit.planning import MoveItPy
+from geometry_msgs.msg import Pose
+import numpy as np
+
+class GraspExecutor(Node):
+    def __init__(self):
+        super().__init__('grasp_executor')
+        self.robot = MoveItPy(node_name='grasp_moveit')
+        self.arm = self.robot.get_planning_component('right_arm')
+        self.gripper = self.robot.get_planning_component('right_gripper')
+
+    def open_gripper(self):
+        self.gripper.set_goal_state(configuration_name='open')
+        self.gripper.plan_and_execute()
+
+    def close_gripper(self):
+        self.gripper.set_goal_state(configuration_name='closed')
+        self.gripper.plan_and_execute()
+
+    def move_to_pose(self, x, y, z, roll=0.0, pitch=1.57, yaw=0.0):
+        pose = Pose()
+        pose.position.x = x
+        pose.position.y = y
+        pose.position.z = z
+        # Chwytanie pionowe (pitch = π/2)
+        from scipy.spatial.transform import Rotation as R
+        q = R.from_euler('xyz', [roll, pitch, yaw]).as_quat()
+        pose.orientation.x = q[0]
+        pose.orientation.y = q[1]
+        pose.orientation.z = q[2]
+        pose.orientation.w = q[3]
+
+        self.arm.set_goal_state(pose_stamped_msg=pose,
+                                 pose_link='right_hand_link')
+        result = self.arm.plan_and_execute()
+        return result.status.status == 4  # SUCCESS
+
+    def grasp_object(self, obj_x, obj_y, obj_z):
+        self.get_logger().info('--- START SEKWENCJI CHWYTU ---')
+
+        # 1. Otwórz chwytak
+        self.open_gripper()
+
+        # 2. Pozycja pre-grasp (15 cm nad obiektem)
+        self.get_logger().info('Pre-grasp...')
+        ok = self.move_to_pose(obj_x, obj_y, obj_z + 0.15)
+        if not ok:
+            self.get_logger().error('Pre-grasp FAILED')
+            return False
+
+        # 3. Opuść na obiekt (ruch kartezjański)
+        self.get_logger().info('Grasp...')
+        ok = self.move_to_pose(obj_x, obj_y, obj_z + 0.02)
+        if not ok:
+            self.get_logger().error('Grasp FAILED')
+            return False
+
+        # 4. Zamknij chwytak
+        self.close_gripper()
+
+        # 5. Retreat – unieś z obiektem
+        self.get_logger().info('Retreat...')
+        self.move_to_pose(obj_x, obj_y, obj_z + 0.25)
+
+        self.get_logger().info('✅ Chwyt zakończony sukcesem!')
+        return True</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- ─── ETAP 4: DETEKCJA CZŁOWIEKA ────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">👤 Etap 4 — Detekcja i Identyfikacja Człowieka</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Po wykonaniu zadania robot musi znaleźć człowieka w pomieszczeniu. Stosujemy warstwowy pipeline: YOLOv8 wykrywa sylwetkę (szybkie), MediaPipe analizuje postawę ciała, a DeepFace rozpoznaje twarz i odczytuje nastrój.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div class="p-5 rounded-xl border-l-4 border-amber-400 bg-amber-50">
+                                <span class="text-xs font-black uppercase text-amber-700 block mb-1">YOLOv8-pose</span>
+                                <h4 class="font-bold text-sm mb-1">Szybka detekcja sylwetki</h4>
+                                <p class="text-xs text-stone-500">Wykrywa ludzi i 17 punktów szkieletu w &lt;20ms. Daje kierunek i odległość osoby od kamery.</p>
+                            </div>
+                            <div class="p-5 rounded-xl border-l-4 border-blue-400 bg-blue-50">
+                                <span class="text-xs font-black uppercase text-blue-700 block mb-1">MediaPipe Holistic</span>
+                                <h4 class="font-bold text-sm mb-1">Pełna analiza ciała</h4>
+                                <p class="text-xs text-stone-500">33 punkty postawy + 21 punktów każdej dłoni + 468 punktów twarzy. Podstawa dla interpretacji gestów.</p>
+                            </div>
+                            <div class="p-5 rounded-xl border-l-4 border-rose-400 bg-rose-50">
+                                <span class="text-xs font-black uppercase text-rose-700 block mb-1">DeepFace</span>
+                                <h4 class="font-bold text-sm mb-1">Identyfikacja i emocje</h4>
+                                <p class="text-xs text-stone-500">Rozpoznaje tożsamość z bazy danych, zwraca nastrój (happy, sad, neutral…) i wiek rozmówcy.</p>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Węzeł detekcji człowieka: YOLOv8 + DeepFace</h3>
+                            <div class="code-block">
+                                <pre><code">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from std_msgs.msg import String
+from cv_bridge import CvBridge
+from ultralytics import YOLO
+from deepface import DeepFace
+import cv2, json
+
+class HumanDetector(Node):
+    def __init__(self):
+        super().__init__('human_detector')
+        self.yolo = YOLO('yolov8n-pose.pt')  # model nano-pose
+        self.bridge = CvBridge()
+        self.human_found = False
+
+        self.create_subscription(Image,
+            '/camera/color/image_raw', self.cb, 10)
+
+        # Temat z informacjami o człowieku
+        self.pub = self.create_publisher(String, '/human_info', 10)
+        self.get_logger().info('Szukam człowieka...')
+
+    def cb(self, msg):
+        frame = self.bridge.imgmsg_to_cv2(msg, 'bgr8')
+        results = self.yolo(frame, classes=[0])  # 0 = 'person'
+
+        persons = results[0].boxes
+        if len(persons) == 0:
+            return
+
+        # Weź osobę z najwyższą pewnością
+        best = max(persons, key=lambda b: float(b.conf))
+        x1, y1, x2, y2 = map(int, best.xyxy[0])
+        face_roi = frame[y1:y1+int((y2-y1)*0.35), x1:x2]  # górne 35% = twarz
+
+        info = {
+            'position_px': [int((x1+x2)/2), int((y1+y2)/2)],
+            'confidence':  float(best.conf),
+            'emotion':     'unknown',
+            'age':         'unknown',
+            'identity':    'unknown'
+        }
+
+        # Analiza twarzy (może być wolna – uruchamiaj co N klatek)
+        try:
+            if face_roi.size > 0:
+                analysis = DeepFace.analyze(
+                    face_roi,
+                    actions=['emotion', 'age'],
+                    enforce_detection=False,
+                    silent=True
+                )
+                info['emotion'] = analysis[0]['dominant_emotion']
+                info['age']     = int(analysis[0]['age'])
+        except Exception:
+            pass
+
+        out = String()
+        out.data = json.dumps(info, ensure_ascii=False)
+        self.pub.publish(out)
+
+        self.get_logger().info(
+            f"Człowiek wykryty | nastrój: {info['emotion']} "
+            f"| wiek: {info['age']} | pewność: {info['confidence']:.0%}")
+
+def main():
+    rclpy.init()
+    rclpy.spin(HumanDetector())
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- ─── ETAP 5: GESTY ─────────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">👋 Etap 5 — Powitanie: Gesty Ramieniem</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Robot wykonuje sekwencję gestów ramieniem przez SDK2 Low-Level — animowane, naturalne powitanie składa się z podniesienia ramienia, machania i powrotu do pozycji neutralnej.
+                        </p>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Gest machania — interpolacja sinusoidalna (Python SDK2)</h3>
+                            <div class="code-block">
+                                <pre><code">#!/usr/bin/env python3
+# Gest powitania: podniesienie ramienia + machanie 3x
+from unitree_sdk2.common import ChannelFactory, ChannelPublisher, ChannelSubscriber
+from unitree_sdk2.hg.h1_2_arm_sdk import LowCmd, LowState
+import time, math
+
+ChannelFactory.Initialize(0, "eth0")
+
+latest_state = [None]
+def on_state(msg): latest_state[0] = msg
+
+sub = ChannelSubscriber("rt/lowstate", LowState)
+sub.InitSubscriber(on_state)
+pub = ChannelPublisher("rt/lowcmd", LowCmd)
+pub.InitPublisher()
+
+while latest_state[0] is None:
+    time.sleep(0.01)
+
+# ── Indeksy stawów prawego ramienia G1 ─────────────────
+# (sprawdź dokumentację SDK2 dla konkretnych indeksów G1)
+SHOULDER_PITCH = 13   # prawe ramię – uniesienie
+SHOULDER_ROLL  = 14   # prawe ramię – odwiedzenie
+ELBOW          = 15   # prawy łokieć
+
+Kp = 60.0
+Kd = 2.0
+FREQ = 200  # Hz
+dt   = 1.0 / FREQ
+
+def send_cmd(targets: dict):
+    """targets: {joint_index: target_angle_rad}"""
+    cmd = LowCmd()
+    state = latest_state[0]
+    for i in range(len(cmd.motor_cmd)):
+        cmd.motor_cmd[i].mode = 0x01
+        cmd.motor_cmd[i].q   = state.motor_state[i].q
+        cmd.motor_cmd[i].kp  = 0.0
+        cmd.motor_cmd[i].kd  = 3.0
+        cmd.motor_cmd[i].tau = 0.0
+    for idx, angle in targets.items():
+        cmd.motor_cmd[idx].q  = angle
+        cmd.motor_cmd[idx].kp = Kp
+        cmd.motor_cmd[idx].kd = Kd
+    pub.Write(cmd)
+
+def interpolate(start, end, duration):
+    """Płynne przejście z interpolacją cosinus (ease-in/out)"""
+    steps = int(duration * FREQ)
+    for i in range(steps):
+        t = i / steps
+        alpha = (1 - math.cos(math.pi * t)) / 2
+        current = {j: start[j] + alpha * (end[j] - start[j]) for j in start}
+        send_cmd(current)
+        time.sleep(dt)
+
+print("▶ Gest powitania: start")
+
+NEUTRAL  = {SHOULDER_PITCH: 0.0,  SHOULDER_ROLL: -0.3, ELBOW: 0.5}
+RAISED   = {SHOULDER_PITCH: -1.2, SHOULDER_ROLL: -0.6, ELBOW: 0.8}
+WAVE_A   = {SHOULDER_PITCH: -1.2, SHOULDER_ROLL: -0.3, ELBOW: 1.2}
+WAVE_B   = {SHOULDER_PITCH: -1.2, SHOULDER_ROLL: -0.9, ELBOW: 0.4}
+
+# 1. Unieś ramię
+interpolate(NEUTRAL, RAISED, duration=0.8)
+
+# 2. Macha 3 razy
+for _ in range(3):
+    interpolate(RAISED, WAVE_A, duration=0.35)
+    interpolate(WAVE_A, WAVE_B, duration=0.35)
+
+# 3. Powrót do neutralnej
+interpolate(RAISED, NEUTRAL, duration=1.0)
+
+print("✅ Gest zakończony")</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- ─── ETAP 5b: MOWA ──────────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">🔊 Etap 5b — Synteza Mowy (TTS)</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Równolegle z gestem robot mówi do człowieka. Stosujemy <strong>Coqui TTS</strong> do polskiej, naturalnie brzmiącej syntezy offline lub <strong>pyttsx3</strong> jako lekką alternatywę bez GPU.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-4">
+                            <div class="p-5 bg-white rounded-xl border border-stone-100 shadow-sm">
+                                <span class="text-xs font-black uppercase text-stone-600 block mb-2">Coqui TTS</span>
+                                <p class="text-xs text-stone-500 mb-3">Offline, wysokiej jakości synteza z modelem VITS lub XTTS v2. Obsługuje język polski. Wymaga GPU dla szybkości real-time.</p>
+                                <div class="code-block" style="margin:0; font-size:0.75rem; padding: 0.75rem;">
+                                    <pre><code>pip install TTS
+# Listowanie modeli PL
+tts --list_models | grep pl</code></pre>
+                                </div>
+                            </div>
+                            <div class="p-5 bg-white rounded-xl border border-stone-100 shadow-sm">
+                                <span class="text-xs font-black uppercase text-stone-600 block mb-2">pyttsx3</span>
+                                <p class="text-xs text-stone-500 mb-3">Lekka biblioteka TTS offline, działa na CPU. Idealna do prostych komunikatów bez opóźnień instalacji modeli.</p>
+                                <div class="code-block" style="margin:0; font-size:0.75rem; padding: 0.75rem;">
+                                    <pre><code>pip install pyttsx3
+# Działa bez Internetu
+# Głos zależy od espeak-ng</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Węzeł mowy: dynamiczny komunikat na podstawie wykrytego nastroju</h3>
+                            <div class="code-block">
+                                <pre><code">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+from TTS.api import TTS
+import sounddevice as sd
+import json, numpy as np, threading
+
+class G1SpeechNode(Node):
+    GREETINGS = {
+        'happy':   'Cześć! Widzę, że jesteś w świetnym nastroju! '
+                   'Właśnie skończyłem pakowanie elementów. Jak mogę pomóc?',
+        'sad':     'Hej. Zauważyłem, że może nie masz najlepszego dnia. '
+                   'Skończyłem zadanie – mam nadzieję, że to Cię ucieszy!',
+        'neutral': 'Cześć! Jestem G1. Wykonałem powierzone mi zadanie. '
+                   'Pudełko jest spakowane i gotowe.',
+        'angry':   'Dzień dobry. Staram się nie przeszkadzać. '
+                   'Zadanie zostało wykonane pomyślnie.',
+        'unknown': 'Witaj! Jestem robot Unitree G1. '
+                   'Skończyłem pracę i chciałem Cię przywitać!'
+    }
+
+    def __init__(self):
+        super().__init__('g1_speech')
+        # Wczytaj polski model TTS (VITS multilingual)
+        self.tts = TTS('tts_models/multilingual/multi-dataset/xtts_v2',
+                       gpu=True)
+        self.spoken = set()
+
+        self.create_subscription(String, '/human_info', self.on_human, 10)
+        self.get_logger().info('Węzeł mowy gotowy.')
+
+    def on_human(self, msg):
+        info = json.loads(msg.data)
+        emotion = info.get('emotion', 'unknown')
+
+        # Mów tylko raz per sesję spotkania
+        if emotion in self.spoken:
+            return
+        self.spoken.add(emotion)
+
+        text = self.GREETINGS.get(emotion, self.GREETINGS['unknown'])
+        self.get_logger().info(f'Mówię ({emotion}): {text[:50]}...')
+
+        # Synteza w osobnym wątku (nie blokuj pętli ROS2)
+        threading.Thread(target=self._speak, args=(text,), daemon=True).start()
+
+    def _speak(self, text: str):
+        wav = self.tts.tts(text=text, language='pl',
+                           speaker_wav='/home/g1/voice_ref.wav')
+        audio = np.array(wav, dtype=np.float32)
+        sd.play(audio, samplerate=22050)
+        sd.wait()
+
+def main():
+    rclpy.init()
+    rclpy.spin(G1SpeechNode())
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- ─── ORCHESTRATOR ───────────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">🎼 Orkiestrator Misji — Spinanie wszystkiego razem</div>
+
+                        <p class="text-stone-600 leading-relaxed">
+                            Wszystkie etapy łączy węzeł-orkiestrator oparty na <strong>maszynie stanów</strong> (Behavior Tree lub prosty FSM). Decyduje, który krok jest aktywny i przekazuje dane między modułami.
+                        </p>
+
+                        <section>
+                            <h3 class="text-xl font-bold mb-3">Prosta Maszyna Stanów (FSM) misji</h3>
+                            <div class="code-block">
+                                <pre><code">#!/usr/bin/env python3
+# Orkiestrator misji G1 – Finite State Machine
+from enum import Enum, auto
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+from geometry_msgs.msg import PointStamped
+import json
+
+class State(Enum):
+    NAVIGATE_TO_AREA  = auto()  # jedź do strefy pracy
+    DETECT_OBJECTS    = auto()  # szukaj elementów i pudełka
+    GRASP_ITEMS       = auto()  # podnieś elementy, włóż do pudełka
+    FIND_HUMAN        = auto()  # nawiguj do człowieka
+    GREET             = auto()  # gest + mowa
+    DONE              = auto()  # zakończ misję
+
+class MissionFSM(Node):
+    def __init__(self):
+        super().__init__('mission_fsm')
+        self.state = State.NAVIGATE_TO_AREA
+        self.box_pos = None
+        self.human_info = None
+
+        # Subskrybuj wyniki modułów
+        self.create_subscription(PointStamped,
+            '/detected_box_position', self._on_box, 10)
+        self.create_subscription(String,
+            '/human_info', self._on_human, 10)
+
+        # Komendy do modułów
+        self.nav_pub   = self.create_publisher(String, '/mission/nav_cmd', 10)
+        self.grasp_pub = self.create_publisher(String, '/mission/grasp_cmd', 10)
+        self.greet_pub = self.create_publisher(String, '/mission/greet_cmd', 10)
+
+        # Pętla FSM co 500ms
+        self.create_timer(0.5, self.tick)
+        self.get_logger().info('🚀 Misja G1 rozpoczęta!')
+
+    def _on_box(self, msg):
+        self.box_pos = msg
+
+    def _on_human(self, msg):
+        self.human_info = json.loads(msg.data)
+
+    def tick(self):
+        log = self.get_logger()
+
+        if self.state == State.NAVIGATE_TO_AREA:
+            log.info('[FSM] → Nawiguję do strefy pracy...')
+            self.nav_pub.publish(String(data='goto:2.5,1.0,90'))
+            # W rzeczywistości czekasz na sukces akcji nav2
+            self.state = State.DETECT_OBJECTS
+
+        elif self.state == State.DETECT_OBJECTS:
+            if self.box_pos is not None:
+                log.info('[FSM] → Pudełko wykryte! Przechodzę do chwytu.')
+                self.state = State.GRASP_ITEMS
+            else:
+                log.info('[FSM] Szukam obiektów...')
+
+        elif self.state == State.GRASP_ITEMS:
+            p = self.box_pos.point
+            cmd = f'grasp:{p.x:.3f},{p.y:.3f},{p.z:.3f}'
+            self.grasp_pub.publish(String(data=cmd))
+            log.info(f'[FSM] → Chwyt @ ({p.x:.2f}, {p.y:.2f}, {p.z:.2f})')
+            self.state = State.FIND_HUMAN
+
+        elif self.state == State.FIND_HUMAN:
+            if self.human_info is not None:
+                log.info('[FSM] → Człowiek wykryty! Podchodzę do powitania.')
+                emotion = self.human_info.get('emotion', 'unknown')
+                pos = self.human_info.get('position_px', [0, 0])
+                self.nav_pub.publish(String(data='goto:human'))
+                self.state = State.GREET
+            else:
+                log.info('[FSM] Szukam człowieka w pomieszczeniu...')
+
+        elif self.state == State.GREET:
+            emotion = self.human_info.get('emotion', 'unknown')
+            self.greet_pub.publish(String(data=f'greet:{emotion}'))
+            log.info(f'[FSM] → Pozdrawiam! Nastrój rozmówcy: {emotion}')
+            self.state = State.DONE
+
+        elif self.state == State.DONE:
+            log.info('[FSM] ✅ Misja zakończona pomyślnie!')
+            self.destroy_timer(self.timers[0] if self.timers else None)
+
+def main():
+    rclpy.init()
+    rclpy.spin(MissionFSM())
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</code></pre>
+                            </div>
+                        </section>
+
+                        <!-- ─── PODSUMOWANIE STOSU ─────────────────────────────── -->
+                        <hr class="section-divider">
+                        <div class="section-label">📋 Podsumowanie stosu technologicznego</div>
+
+                        <div class="overflow-x-auto rounded-xl border border-stone-100">
+                            <table class="w-full text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-stone-900 text-amber-400">
+                                        <th class="text-left px-4 py-3 font-black">Etap</th>
+                                        <th class="text-left px-4 py-3 font-black">Narzędzie</th>
+                                        <th class="text-left px-4 py-3 font-black">Protokół</th>
+                                        <th class="text-left px-4 py-3 font-black">Uwagi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-stone-100 bg-white">
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Mapa + Lokalizacja</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">slam_toolbox + AMCL</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">/map, /tf</td>
+                                        <td class="px-4 py-3 text-stone-500">2D LiDAR lub depth→scan</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Planowanie trasy</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">Nav2</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">NavigateToPose action</td>
+                                        <td class="px-4 py-3 text-stone-500">Costmapy 2D, DWB planner</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Detekcja obiektów</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">YOLOv8 + RealSense</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">/detected_box_position</td>
+                                        <td class="px-4 py-3 text-stone-500">Centroid 3D z PointCloud2</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Planowanie chwytu</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">MoveIt 2 + GraspNet</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">MoveGroup API</td>
+                                        <td class="px-4 py-3 text-stone-500">Pre-grasp → Grasp → Retreat</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Detekcja człowieka</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">YOLOv8-pose + DeepFace</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">/human_info (JSON)</td>
+                                        <td class="px-4 py-3 text-stone-500">Klasa 0 (person) + emocje</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Gesty powitania</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">Unitree SDK2 Low-Level</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">rt/lowcmd DDS</td>
+                                        <td class="px-4 py-3 text-stone-500">Interpolacja sinusoidalna 200Hz</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Synteza mowy</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">Coqui TTS (XTTS v2)</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">sounddevice (audio out)</td>
+                                        <td class="px-4 py-3 text-stone-500">Polski, offline, adaptacja do nastroju</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="px-4 py-3 font-bold">Orkiestracja</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600">FSM / BehaviorTree.CPP</td>
+                                        <td class="px-4 py-3 font-mono text-stone-500">ROS2 Topics + Actions</td>
+                                        <td class="px-4 py-3 text-stone-500">Spinanie wszystkich modułów</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="p-7 bg-stone-950 rounded-3xl text-white mt-2">
+                            <h3 class="text-xl font-black mb-3 text-amber-400">Uruchomienie pełnej misji</h3>
+                            <div class="code-block" style="margin-bottom: 0; background: #0c0a09;">
+                                <pre><code"># Terminal 1: Most ROS2 ↔ G1
+ros2 launch unitree_ros2 g1_bridge.launch.py interface:=eth0
+
+# Terminal 2: SLAM + Nav2
+ros2 launch my_g1_pkg navigation.launch.py map:=~/maps/room_map.yaml
+
+# Terminal 3: Percepcja (YOLO + chmura punktów)
+ros2 run my_g1_pkg box_detector
+ros2 run my_g1_pkg human_detector
+
+# Terminal 4: Mowa
+ros2 run my_g1_pkg speech_node
+
+# Terminal 5: START MISJI
+ros2 run my_g1_pkg mission_fsm</code></pre>
+                            </div>
+                        </div>
+
+                    </div>
+                `
+            }
+        ];
+
+        let currentIdx = 0;
+        const state = { completed: new Set() };
+
+        function renderNav() {
+            const list = document.getElementById('nav-list');
+            list.innerHTML = '';
+            modules.forEach((mod, i) => {
+                const active = i === currentIdx;
+                const done = state.completed.has(i);
+
+                const item = document.createElement('div');
+                item.className = `p-3 rounded-xl cursor-pointer transition-all flex items-center gap-3 ${active ? 'nav-item-active' : 'hover:bg-stone-900 text-stone-500'}`;
+                item.onclick = () => { currentIdx = i; renderApp(); };
+
+                item.innerHTML = `
+                    <span class="text-xl">${done ? '✅' : mod.icon}</span>
+                    <span class="text-sm font-bold tracking-tight">${mod.title}</span>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function renderContent() {
+            const mount = document.getElementById('content-mount');
+            const mod = modules[currentIdx];
+
+            const linksHtml = mod.links.map(l => `
+                <a href="${l.url}" target="_blank" class="text-[10px] font-bold text-amber-600 border border-amber-200 px-3 py-1 rounded-full hover:bg-amber-50">
+                    ${l.name} ↗
+                </a>
+            `).join('');
+
+            mount.innerHTML = `
+                <div class="mb-10">
+                    <span class="text-xs font-black text-amber-500 uppercase tracking-widest">Krok ${currentIdx + 1}</span>
+                    <h2 class="text-4xl font-extrabold text-stone-900 mb-4">${mod.title}</h2>
+                    <p class="text-lg text-stone-500 mb-6">${mod.description}</p>
+                    <div class="flex flex-wrap gap-2">${linksHtml}</div>
+                </div>
+                <div class="prose max-w-none">${mod.details}</div>
+            `;
+
+            document.getElementById('main-scroll-area').scrollTop = 0;
+            document.getElementById('prev-btn').disabled = currentIdx === 0;
+            document.getElementById('next-btn').innerText = currentIdx === modules.length - 1 ? 'Zakończ ✓' : 'Następny Krok →';
+            document.getElementById('footer-label').innerText = `Moduł: ${mod.title}`;
+        }
+
+        function changeModule(dir) {
+            if (dir === 1) state.completed.add(currentIdx);
+            const next = currentIdx + dir;
+            if (next >= 0 && next < modules.length) {
+                currentIdx = next;
+                renderApp();
+            }
+        }
+
+        function updateProgress() {
+            const p = Math.round((state.completed.size / modules.length) * 100);
+            document.getElementById('top-progress').style.width = `${p}%`;
+            document.getElementById('inner-progress').style.width = `${p}%`;
+            document.getElementById('progress-val').innerText = `${p}%`;
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        }
+
+        function renderApp() {
+            renderNav();
+            renderContent();
+            updateProgress();
+        }
+
+        window.onload = renderApp;
+    </script>
+</body>
+</html>

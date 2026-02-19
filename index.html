@@ -166,11 +166,11 @@
             ───────────────────────────────────────────────────────── */
             {
                 id: 'setup',
-                title: 'Przygotowanie Systemu',
+                title: 'Przygotowanie systemu',
                 icon: '🐧',
                 links: [
                     {name: 'Ubuntu 22.04', url: 'https://releases.ubuntu.com/jammy/'},
-                    {name: 'NVIDIA Drivers', url: 'https://www.nvidia.com/en-us/drivers/'},
+                    {name: 'NVIDIA drivers', url: 'https://www.nvidia.com/en-us/drivers/'},
                     {name: 'CycloneDDS', url: 'https://github.com/eclipse-cyclonedds/cyclonedds'}
                 ],
                 description: 'Kompletna konfiguracja Ubuntu 22.04 dla Unitree G1 EDU – od instalacji jądra niskolatencyjnego, przez sterowniki NVIDIA, po strojenie warstwy sieciowej DDS.',
@@ -178,7 +178,7 @@
                     <div class="space-y-6 step-content">
 
                         <!-- CZĘŚĆ 1: Ubuntu i narzędzia -->
-                        <div class="section-label">🐧 Część 1 — Ubuntu 22.04 &amp; Narzędzia bazowe</div>
+                        <div class="section-label">Część 1 — Ubuntu 22.04 &amp; Narzędzia bazowe</div>
 
                         <p class="text-stone-600">Unitree G1 komunikuje się przez protokół UDP. Aby zapewnić stabilność, system musi być zoptymalizowany pod kątem opóźnień sieciowych oraz obsługi kart NVIDIA wymaganych przez Isaac Sim.</p>
 
@@ -213,7 +213,7 @@ sudo apt install nvidia-driver-535 -y
                         <hr class="section-divider">
 
                         <!-- CZĘŚĆ 2: Konfiguracja OS -->
-                        <div class="section-label">⚙️ Część 2 — Konfiguracja OS pod niskie opóźnienia</div>
+                        <div class="section-label">Część 2 — Konfiguracja OS pod niskie opóźnienia</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">3. Jądro lowlatency</h3>
@@ -233,7 +233,7 @@ sudo apt install linux-image-lowlatency linux-headers-lowlatency -y
                         <hr class="section-divider">
 
                         <!-- CZĘŚĆ 3: Sieć i CycloneDDS -->
-                        <div class="section-label">📶 Część 3 — Sieć, CycloneDDS i zależności SDK</div>
+                        <div class="section-label">Część 3 — Sieć, CycloneDDS i zależności SDK</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">4. Konfiguracja interfejsu sieciowego</h3>
@@ -303,7 +303,7 @@ sudo make install</code></pre>
                     <div class="space-y-6 step-content">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">🏛️ Architektura — Jak działa ROS 2 z G1?</div>
+                        <div class="section-label">Architektura — Jak działa ROS 2 z G1?</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             ROS 2 (Robot Operating System 2) to nie system operacyjny, lecz <strong>middleware</strong> – warstwa komunikacyjna łącząca niezależne procesy (węzły) przez ustandaryzowane interfejsy. Unitree G1 EDU integruje się z ROS 2 przez mostek DDS, który przekształca wewnętrzne pakiety UDP robota na standardowe wiadomości ROS 2.
@@ -346,7 +346,7 @@ sudo make install</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">📦 Część 1 — Instalacja i Workspace</div>
+                        <div class="section-label">Część 1 — Instalacja i workspace</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">1. Instalacja ROS 2 Humble</h3>
@@ -401,7 +401,7 @@ source ~/.bashrc</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">📡 Część 2 — Tematy i Komendy G1</div>
+                        <div class="section-label">Część 2 — tematy (topics) i komendy G1</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">3. Mapa kluczowych tematów ROS 2 dla G1</h3>
@@ -492,7 +492,7 @@ ros2 bag play ~/session_2024_g1</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">🐍 Część 3 — Własne Węzły ROS 2 (Python)</div>
+                        <div class="section-label">Część 3 — Własne węzły ROS 2 (Python)</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">5. Subskrybent stanu robota (Subscriber)</h3>
@@ -636,7 +636,7 @@ if __name__ == '__main__':
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">🚀 Część 4 — Launch Files i Parametry</div>
+                        <div class="section-label">Część 4 — Launch Files i Parametry</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">8. Plik Launch – uruchamianie wielu węzłów jednocześnie</h3>
@@ -692,7 +692,7 @@ ros2 launch my_g1_pkg g1_full.launch.py interface:=enp3s0</code></pre>
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">🗺️ Część 5 — tf2: System Transformacji</div>
+                        <div class="section-label">Część 5 — tf2: System Transformacji</div>
 
                         <section>
                             <h3 class="text-xl font-bold mb-3">9. Drzewo transformacji G1 (tf2)</h3>
@@ -737,7 +737,7 @@ class TfReader(Node):
                         <hr class="section-divider">
 
                         <!-- ═══════════════════════════════════════════ -->
-                        <div class="section-label">🏗️ Część 6 — Unitree SDK2 (Low-Level Control)</div>
+                        <div class="section-label">Część 6 — Unitree SDK2 (Low-Level Control)</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             SDK2 umożliwia <strong>bezpośredni</strong> dostęp do silników G1 z pominięciem ROS 2 – niezbędny przy implementacji własnych kontrolerów balansu lub Reinforcement Learning. Komunikuje się przez DDS bezpośrednio z kontrolerem ruchu robota.
@@ -892,7 +892,7 @@ while True:
             ───────────────────────────────────────────────────────── */
             {
                 id: 'ai',
-                title: 'Vision AI & Perception',
+                title: 'Vision AI & perception',
                 icon: '👁️',
                 links: [{name: 'MediaPipe', url: 'https://ai.google.dev/edge/mediapipe/solutions/guide?hl=pl'}],
                 description: 'Integracja kamer G1 z modelami MediaPipe i DeepFace dla rozpoznawania osób i gestów.',
@@ -992,7 +992,7 @@ def analyze_user(frame):
             ───────────────────────────────────────────────────────── */
             {
                 id: 'lerobot',
-                title: 'LeRobot & Imitation Learning',
+                title: 'LeRobot & Imitation learning',
                 icon: '🧠',
                 links: [
                     {name: 'Hugging Face LeRobot', url: 'https://huggingface.co/lerobot'},
@@ -1023,7 +1023,7 @@ def analyze_user(frame):
                         <hr class="section-divider">
 
                         <!-- KROK 1: Instalacja -->
-                        <div class="section-label">📦 Krok 1 — Instalacja</div>
+                        <div class="section-label">Krok 1 — Instalacja</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Instalacja LeRobot</h3>
                             <p class="text-stone-600 mb-3">Biblioteka wymaga Pythona 3.10+ oraz wsparcia dla akceleracji GPU (CUDA).</p>
@@ -1041,7 +1041,7 @@ pip install opencv-python pynput</code></pre>
                         <hr class="section-divider">
 
                         <!-- KROK 2: Zbieranie danych -->
-                        <div class="section-label">🎥 Krok 2 — Zbieranie Danych</div>
+                        <div class="section-label">Krok 2 — Zbieranie danych</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Struktura Datasetu G1</h3>
                             <p class="text-stone-600 mb-4">Proces polega na nagrywaniu pary: <strong>Obraz z kamery robota</strong> + <strong>Kąty silników</strong> (state) wysyłane przez człowieka podczas teleoperacji.</p>
@@ -1074,7 +1074,7 @@ python lerobot/scripts/record.py \
                         <hr class="section-divider">
 
                         <!-- KROK 3: Trening -->
-                        <div class="section-label">🔬 Krok 3 — Trening Polityki AI</div>
+                        <div class="section-label">Krok 3 — Trening polityki AI</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Trening z architekturą ACT</h3>
                             <p class="text-stone-600 mb-3">Uruchomienie treningu z wykorzystaniem architektury ACT dla Twojego datasetu G1:</p>
@@ -1091,7 +1091,7 @@ python lerobot/scripts/record.py \
                         <hr class="section-divider">
 
                         <!-- KROK 4: Deployment -->
-                        <div class="section-label">🚀 Krok 4 — Deployment na G1</div>
+                        <div class="section-label">Krok 4 — Deployment na G1</div>
                         <section>
                             <h3 class="text-xl font-bold mb-3">Inferencja w czasie rzeczywistym</h3>
                             <p class="text-stone-600 mb-3">Po wytrenowaniu modelu, polityka steruje robotem w czasie rzeczywistym, „widząc" świat przez kamerę.</p>
@@ -1104,7 +1104,7 @@ policy = lerobot.Policy.from_pretrained("outputs/train/g1_act_v1/checkpoints/las
 
 # Pętla sterowania
 while True:
-    obs = robot.get_observations()  # Obraz + Stan
+    obs = robot.get_observations()  # Obraz + stan
     action = policy.predict(obs)    # Inferencja AI
     robot.set_joint_targets(action) # Ruch silników</code></pre>
                             </div>
@@ -1271,7 +1271,7 @@ if (success) {
             ───────────────────────────────────────────────────────── */
             {
                 id: 'nvidia_stack',
-                title: 'Stos NVIDIA: Sim & RL',
+                title: 'Soft NVIDIA: Sim & RL',
                 icon: '🟢',
                 links: [
                     {name: 'NVIDIA Omniverse', url: 'https://developer.nvidia.com/omniverse'},
@@ -1406,7 +1406,7 @@ cd IsaacLab
             ───────────────────────────────────────────────────────── */
             {
                 id: 'hardware',
-                title: 'Wymagania i Deploy',
+                title: 'Wymagania i deploy',
                 icon: '🖥️',
                 links: [{name: 'Isaac Sim Docs', url: 'https://docs.isaacsim.omniverse.nvidia.com/'}],
                 description: 'Zasoby sprzętowe potrzebne do uruchomienia pełnego stosu NVIDIA i wdrożenia modeli na robot.',
@@ -1464,7 +1464,7 @@ cd IsaacLab
             ═══════════════════════════════════════════════════════════ */
             {
                 id: 'autonomous_mission',
-                title: 'Autonomiczna Misja G1',
+                title: 'Karkołomna misja autonomicznego G1',
                 icon: '🧭',
                 links: [
                     {name: 'Nav2 Docs', url: 'https://docs.nav2.org/'},
@@ -1511,7 +1511,7 @@ cd IsaacLab
 
                         <!-- ─── ETAP 1: NAWIGACJA ──────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🗺️ Etap 1 — Autonomiczna Nawigacja (SLAM + Nav2)</div>
+                        <div class="section-label">🗺️ Etap 1 — Autonomiczna nawigacja (SLAM + Nav2)</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Zanim G1 zacznie cokolwiek robić, musi wiedzieć, gdzie jest i jak się poruszać bezpiecznie. Używamy dwóch warstw: <strong>SLAM</strong> (jednoczesne mapowanie i lokalizacja) buduje mapę pomieszczenia, a <strong>Nav2</strong> planuje i wykonuje trasy z unikaniem przeszkód.
@@ -1764,7 +1764,7 @@ if __name__ == '__main__':
 
                         <!-- ─── ETAP 3: CHWYT ─────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🦾 Etap 3 — Planowanie i Wykonanie Chwytu</div>
+                        <div class="section-label">🦾 Etap 3 — Planowanie i wykonanie chwytu</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Mając pozycję 3D pudełka, robot musi wygenerować optymalną pozę chwytu i wykonać ruch ramieniem bez kolizji. Pipeline łączy <strong>GraspNet</strong> (predykcja pozy) z <strong>MoveIt 2</strong> (planowanie trajektorii).
@@ -1866,7 +1866,7 @@ class GraspExecutor(Node):
 
                         <!-- ─── ETAP 4: DETEKCJA CZŁOWIEKA ────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">👤 Etap 4 — Detekcja i Identyfikacja Człowieka</div>
+                        <div class="section-label">👤 Etap 4 — Detekcja i identyfikacja człowieka</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Po wykonaniu zadania robot musi znaleźć człowieka w pomieszczeniu. Stosujemy warstwowy pipeline: YOLOv8 wykrywa sylwetkę (szybkie), MediaPipe analizuje postawę ciała, a DeepFace rozpoznaje twarz i odczytuje nastrój.
@@ -1972,7 +1972,7 @@ if __name__ == '__main__':
 
                         <!-- ─── ETAP 5: GESTY ─────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">👋 Etap 5 — Powitanie: Gesty Ramieniem</div>
+                        <div class="section-label">👋 Etap 5 — Powitanie: gesty ramieniem</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Robot wykonuje sekwencję gestów ramieniem przez SDK2 Low-Level — animowane, naturalne powitanie składa się z podniesienia ramienia, machania i powrotu do pozycji neutralnej.
@@ -2061,7 +2061,7 @@ print("✅ Gest zakończony")</code></pre>
 
                         <!-- ─── ETAP 5b: MOWA ──────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🔊 Etap 5b — Synteza Mowy (TTS)</div>
+                        <div class="section-label">🔊 Etap 5b — synteza mowy (TTS)</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Równolegle z gestem robot mówi do człowieka. Stosujemy <strong>Coqui TTS</strong> do polskiej, naturalnie brzmiącej syntezy offline lub <strong>pyttsx3</strong> jako lekką alternatywę bez GPU.
@@ -2157,7 +2157,7 @@ if __name__ == '__main__':
 
                         <!-- ─── ORCHESTRATOR ───────────────────────────────────── -->
                         <hr class="section-divider">
-                        <div class="section-label">🎼 Orkiestrator Misji — Spinanie wszystkiego razem</div>
+                        <div class="section-label">🎼 Orkiestrator misji — spinanie wszystkiego do kupy</div>
 
                         <p class="text-stone-600 leading-relaxed">
                             Wszystkie etapy łączy węzeł-orkiestrator oparty na <strong>maszynie stanów</strong> (Behavior Tree lub prosty FSM). Decyduje, który krok jest aktywny i przekazuje dane między modułami.

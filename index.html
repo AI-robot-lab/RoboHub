@@ -2923,6 +2923,241 @@ ros2 run my_g1_pkg mission_fsm</code></pre>
 
                     </div>
                 `
+            },
+        /* ─────────────────────────────────────────────────────────
+               MODUŁ 9: PROJEKT PRAKTYCZNY — Magazynier (Karton & Półka)
+            ───────────────────────────────────────────────────────── */
+            {
+                id: 'logistics_project',
+                title: 'Projekt: Alf magazynier',
+                icon: '📦',
+                links: [
+                    {name: 'Unitree G1 SDK', url: 'https://github.com/unitreerobotics/unitree_sdk2'},
+                    {name: 'Nav2 Configuration', url: 'https://navigation.ros.org/configuration/packages/configuring-costmaps.html'},
+                    {name: 'YOLOv8 Docs', url: 'https://docs.ultralytics.com/'}
+                ],
+                description: 'Kompletny poradnik implementacji zadania logistycznego: wykrycie kartonu, załadowanie towaru, transport do wyznaczonej strefy i omijanie przeszkód.',
+                details: `
+                    <div class="space-y-6 step-content">
+
+                        <!-- SCENARIUSZ -->
+                        <div class="bg-stone-950 rounded-2xl p-7 text-white shadow-xl">
+                            <p class="text-amber-500 text-[10px] font-black uppercase tracking-widest mb-3">Scenariusz aplikacji</p>
+                            <h3 class="text-2xl font-black mb-4 leading-tight">Zadanie: pakowanie i transport kartonów</h3>
+                            <p class="text-stone-400 text-sm mb-4 leading-relaxed">
+                                Robot Unitree G1 EDU ma za zadanie autonomicznie zlokalizować pusty karton, umieścić w nim przedmiot (np. butelkę), podnieść karton oburącz, a następnie zanieść go na oznaczoną półkę, dynamicznie omijając przeszkody pojawiające się na trasie.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-stone-800 border border-stone-700 rounded text-[10px] font-bold uppercase text-amber-500">Dual Arm Manipulation</span>
+                                <span class="px-3 py-1 bg-stone-800 border border-stone-700 rounded text-[10px] font-bold uppercase text-blue-400">Dynamic Obstacle Avoidance</span>
+                                <span class="px-3 py-1 bg-stone-800 border border-stone-700 rounded text-[10px] font-bold uppercase text-green-400">Marker Detection</span>
+                            </div>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 1: PERCEPCJA -->
+                        <div class="section-label">👁️ Krok 1 — Wykrywanie Kartonów i Przeszkód</div>
+
+                        <p class="text-stone-600 leading-relaxed mb-3">
+                            Wykorzystujemy model <strong>YOLOv8</strong> wytrenowany na klasę "cardboard_box" oraz kamerę głębi do precyzyjnego namierzenia środka kartonu w przestrzeni 3D. Przeszkody są mapowane automatycznie przez lokalny planer Nav2 (local costmap).
+                        </p>
+
+                        <div class="code-block">
+                            <pre><code class="language-python">from ultralytics import YOLO
+import cv2
+import numpy as np
+
+# Inicjalizacja modelu wizyjnego
+model = YOLO("yolov8n.pt") # lub własny model: "best_cardboard.pt"
+
+def get_target_position(image, depth_map, target_class="cardboard_box"):
+    """
+    Zwraca współrzędne (x, y, dist) najbliższego kartonu.
+    """
+    results = model(image, verbose=False)
+    
+    for result in results:
+        boxes = result.boxes
+        for box in boxes:
+            cls_id = int(box.cls[0])
+            label = model.names[cls_id]
+            
+            if label == target_class and float(box.conf) > 0.6:
+                # Oblicz środek bounding boxa
+                x1, y1, x2, y2 = box.xyxy[0]
+                cx, cy = int((x1 + x2) / 2), int((y1 + y2) / 2)
+                
+                # Pobierz dystans z mapy głębi (w mm -> m)
+                # Upewnij się, że depth_map jest poprawnym arrayem numpy
+                if 0 <= cy < depth_map.shape[0] and 0 <= cx < depth_map.shape[1]:
+                    distance = depth_map[cy, cx] / 1000.0
+                
+                    # Jeśli dystans jest prawidłowy (np. 0.3m - 3.0m)
+                    if 0.3 < distance < 3.0:
+                        return {"u": cx, "v": cy, "depth": distance}
+    return None</code></pre>
+                        </div>
+
+                        <div class="pro-tip p-5 rounded-xl">
+                            <h4 class="font-bold text-blue-800">Przeszkody a Nav2</h4>
+                            <p class="text-sm text-blue-700">
+                                Nie musisz pisać własnego kodu do detekcji przeszkód (np. krzesła na drodze). ROS 2 <strong>Nav2 Controller</strong> automatycznie aktualizuje "local_costmap" na podstawie danych z LIDARu/Kamery i wygina ścieżkę (path planning), aby ominąć obiekt w czasie rzeczywistym.
+                            </p>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 2: MANIPULACJA -->
+                        <div class="section-label">🦾 Krok 2 — Manipulacja (Pakowanie i Podnoszenie)</div>
+
+                        <p class="text-stone-600 leading-relaxed mb-3">
+                            Podnoszenie kartonu wymaga koordynacji obu ramion (Dual Arm). W G1 EDU używamy sekwencji: podejście -> kucnięcie (obniżenie CoM) -> ściśnięcie kartonu -> wstanie.
+                        </p>
+
+                        <div class="code-block">
+                            <pre><code class="language-python">class G1Manipulator:
+    def __init__(self, robot_interface):
+        self.robot = robot_interface # Wrapper na Unitree SDK2
+    
+    def fill_and_lift_box(self):
+        print("🤖 Rozpoczynam procedurę pakowania...")
+
+        # 1. Chwyć przedmiot (np. jedną ręką)
+        self.robot.arm_right.move_to(x=0.3, y=-0.2, z=0.1)
+        self.robot.gripper_right.close()
+        self.robot.arm_right.move_to(x=0.3, y=-0.2, z=0.4) # Unieś
+
+        # 2. Upuść do kartonu (zakładamy karton przed robotem)
+        self.robot.arm_right.move_to(x=0.4, y=0.0, z=0.3)
+        self.robot.gripper_right.open()
+        
+        # 3. Przygotuj się do podniesienia kartonu (Dual Arm)
+        # Obniż pozycję ciała (Squat) dla stabilności
+        self.robot.body.set_height(-0.2) 
+        
+        # Ustaw ręce po bokach kartonu
+        self.robot.arm_left.move_to(x=0.35, y=0.20, z=0.1)
+        self.robot.arm_right.move_to(x=0.35, y=-0.20, z=0.1)
+        
+        # 4. Ściśnij (Force Control)
+        # Używamy trybu hybrydowego: pozycja + limit momentu siły
+        self.robot.arms.squeeze(force_n=30.0)
+        
+        # 5. Wstań z obciążeniem
+        self.robot.body.set_height(0.0) # Powrót do stania
+        self.robot.set_gait_mode("load_carrying") # Ważne: zmiana trybu chodu!
+        return True</code></pre>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- KROK 3: ORKIESTRATOR (FSM) -->
+                        <div class="section-label">🧠 Krok 3 — Logika Główna (Maszyna Stanów)</div>
+
+                        <p class="text-stone-600 leading-relaxed mb-3">
+                            Pełny program integrujący widzenie, nawigację i manipulację w pętli decyzyjnej. Pamiętaj o inicjalizacji interfejsów przed uruchomieniem "Worker".
+                        </p>
+
+                        <div class="code-block">
+                            <pre><code class="language-python">#!/usr/bin/env python3
+import time
+from enum import Enum
+
+# Stany robota
+class State(Enum):
+    SEARCH_BOX = 1
+    NAVIGATE_TO_BOX = 2
+    FILL_AND_LIFT = 3
+    NAVIGATE_TO_SHELF = 4
+    PLACE_ON_SHELF = 5
+
+class WarehouseWorker:
+    def __init__(self, robot_interface):
+        self.state = State.SEARCH_BOX
+        self.vision = VisionSystem() # Mock vision class
+        self.nav = Nav2Client()      # Wrapper na ROS2 Action Client
+        # Przekazujemy poprawnie zainicjalizowany interfejs robota
+        self.arms = G1Manipulator(robot_interface)
+        self.target_shelf_loc = None
+        
+    def run(self):
+        print("🚀 Start misji magazyniera")
+        
+        while True:
+            # Pobranie klatki i głębi (przykład)
+            current_obs = self.vision.get_frame()
+            depth_map = self.vision.depth
+            
+            # --- STAN 1: Szukanie kartonu ---
+            if self.state == State.SEARCH_BOX:
+                target = get_target_position(current_obs, depth_map)
+                if target:
+                    print(f"📦 Znaleziono karton: {target['depth']:.2f}m")
+                    self.nav.set_goal(target['u'], target['depth'])
+                    self.state = State.NAVIGATE_TO_BOX
+                else:
+                    self.nav.spin_slowly() # Obrót w poszukiwaniu
+            
+            # --- STAN 2: Dojazd do kartonu ---
+            elif self.state == State.NAVIGATE_TO_BOX:
+                if self.nav.has_reached_goal():
+                    self.nav.stop()
+                    self.state = State.FILL_AND_LIFT
+                elif self.nav.is_stuck():
+                    self.nav.recover()
+            
+            # --- STAN 3: Manipulacja ---
+            elif self.state == State.FILL_AND_LIFT:
+                success = self.arms.fill_and_lift_box()
+                if success:
+                    # Szukaj znacznika półki (np. ArUco ID 42)
+                    self.target_shelf_loc = self.vision.find_marker(id=42)
+                    if self.target_shelf_loc:
+                        self.state = State.NAVIGATE_TO_SHELF
+                    else:
+                        print("⚠️ Nie widzę półki, obracam się...")
+                        self.nav.spin_slowly()
+            
+            # --- STAN 4: Transport ---
+            elif self.state == State.NAVIGATE_TO_SHELF:
+                # Aktualizacja celu w ruchu (Visual Servoing)
+                self.nav.update_goal_continuously(self.target_shelf_loc)
+                
+                if self.nav.distance_to_goal() < 0.5:
+                    self.state = State.PLACE_ON_SHELF
+            
+            # --- STAN 5: Odkładanie ---
+            elif self.state == State.PLACE_ON_SHELF:
+                self.arms.robot.body.set_height(-0.1) # Lekki przysiad
+                self.arms.robot.arms.release()        # Zwolnij ścisk
+                self.arms.robot.body.move_backwards(0.5) 
+                print("✅ Zadanie zakończone sukcesem!")
+                break
+                
+            time.sleep(0.1)
+
+if __name__ == "__main__":
+    # Mock klasy interfejsu dla celów demonstracyjnych
+    # W produkcji użyj: from unitree_sdk2.python import RobotInterface
+    class RobotInterfaceMock: 
+        pass 
+    
+    robot = RobotInterfaceMock() 
+    # Tutaj inicjalizujemy Workera z instancją robota
+    worker = WarehouseWorker(robot)
+    worker.run()</code></pre>
+                        </div>
+
+                        <div class="critical-warn p-5 rounded-xl">
+                            <h4 class="font-bold text-red-800">Uwaga: Stabilność podczas chodu</h4>
+                            <p class="text-sm text-red-700">
+                                Gdy robot niesie karton, środek ciężkości (CoM) przesuwa się do przodu o około 10-15 cm. Należy skompensować to w Unitree SDK, ustawiając <code>body_pitch</code> na lekko dodatnią wartość (odchylenie tułowia do tyłu) lub używając dedykowanego trybu "HighCmd.gaitType = 2" (Load Carrying), jeśli firmware na to pozwala.
+                            </p>
+                        </div>
+
+                    </div>
+                `
             }
         ];
 
